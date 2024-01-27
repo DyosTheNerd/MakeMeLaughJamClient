@@ -42,6 +42,14 @@ namespace Remote.ApiStructs
                         type = new StringApiField()
                         {
                             stringValue = card.type
+                        },
+                        intensity = new StringIntegerField()
+                        {
+                            integerValue = $"{card.intensity}"
+                        },
+                        text = new StringApiField()
+                        {
+                            stringValue = card.text
                         }
                     }
                 };
@@ -93,5 +101,7 @@ namespace Remote.ApiStructs
     {
         public StringIntegerField id;
         public StringApiField type;
+        public StringIntegerField intensity;
+        public StringApiField text;
     }
 }
