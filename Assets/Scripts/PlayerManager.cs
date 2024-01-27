@@ -31,6 +31,8 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+
+
     public Player GetPlayer(string id)
     {
         Player p;
@@ -59,6 +61,7 @@ public class PlayerManager : MonoBehaviour
         {
             interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
         }
+
     }
 
     public void FillHands()
@@ -108,11 +111,17 @@ public class PlayerManager : MonoBehaviour
 
     public void PlayerPlayCard(int cardId, string playerId)
     {
+        // if the program is not waiting for this player anymore
+        // we can discard this event
+        if (!waitingForPlayers.Contains(playerId))
+            return;
+
         playedCards.Add(cardId);
         Player player = GetPlayer(playerId);
 
         // this just removes one instance from the player hand.
         player.PlayCard(cardId);
+        ReadyPlayer(playerId);
     }
     
 

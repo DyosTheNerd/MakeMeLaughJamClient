@@ -7,7 +7,7 @@ public class PlayfieldControll : MonoBehaviour
 {
     OverlordJudging overlordJudging;
 
-    public bool allPlayersReady = false;
+    //public bool allPlayersReady = false;
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
@@ -16,37 +16,39 @@ public class PlayfieldControll : MonoBehaviour
     [Header("PLAYERS")]
     PlayerManager players;
 
-    [Header("ROUND CARDS")]
-    public List<card> PlayedCards = new List<card>();
+    //[Header("ROUND CARDS")]
+    //public List<card> PlayedCards = new List<card>();
 
     [Header("STUFF")]
     public GameObject overlord;
     public GameObject counter;
     public GameObject playerManager;
 
+
+    IEnumerator RoundsCoroutine(int rounds)
+    {
+
+        for (int i = 0; i < rounds; i++)
+        {
+            StartNewRound();
+
+            while (players.ArePlayersReady() != true)
+                yield return new WaitForSeconds(5);
+
+            overlordJudging.OverlordJugdgeNow();
+            
+            //TODO Add overlord animation wait time thing;
+            //yield return new WaitUntil( something something animation complete )
+        }
+
+    }
+
     private void Start()
     {
         overlordJudging = overlord.GetComponent<OverlordJudging>();
         players = playerManager.GetComponent<PlayerManager>();
-    }
 
-    private void Update()
-    {
-        //Request Status of player-input
-
-        //Start new round on screen when all player-input is received
-        if (allPlayersReady == true)
-        {
-            //Block further input
-
-            HandleRound();
-        }
-    }
-
-    private void HandleRound()
-    {
-        overlordJudging.OverlordJugdgeNow();
-        StartNewRound();
+        StartCoroutine(RoundsCoroutine(totalRounds));
     }
 
     private void StartNewRound()
@@ -57,16 +59,16 @@ public class PlayfieldControll : MonoBehaviour
         }
         else
         {
-            allPlayersReady = false;
-
             //Set Round
             currentRound = currentRound + 1;
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
+            // TODO update round UI here.
+
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
+            // sets are players ready to false
             players.UnreadyPlayers();
-            //update hands hook
         }
     }
 }
