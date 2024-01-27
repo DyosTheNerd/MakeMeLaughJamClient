@@ -150,13 +150,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5860872548675548675}
+  - component: {fileID: 7052885607833460739}
   m_Layer: 0
   m_Name: RemoteControllerForMobile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5860872548675548675
 Transform:
   m_ObjectHideFlags: 0
@@ -174,3 +175,16 @@ Transform:
   - {fileID: 8583281311913882243}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7052885607833460739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434373118504014268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47263462f9cb4767be3f607453a0dec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseProjectUrl: https://firestore.googleapis.com/v1/projects/makemelaughjam/databases/(default)/documents/games
