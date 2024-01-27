@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayfieldControll : MonoBehaviour
 {
     OverlordJudging overlordJudging;
 
-    bool allPlayersReady = false;
+    public bool allPlayersReady = false;
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
@@ -60,13 +61,10 @@ public class PlayfieldControll : MonoBehaviour
 
             //Set Round
             currentRound = currentRound + 1;
-            counter.GetComponent<TextMesh>().text = currentRound.ToString();
+            counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
-
-            //Set new Judging (SHOULD IT CHANGE EVERY ROUND?)
-            //overlordJudging.BuildJudgeRules();
         }
     }
 }
