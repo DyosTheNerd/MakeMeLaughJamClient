@@ -22,7 +22,7 @@ public class InteractionManager : MonoBehaviour
     public delegate void OnUpdatePlayerHand(string playerId, CardInteraction[] cards);
     public event OnUpdatePlayerHand HandUpdated;
     
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
