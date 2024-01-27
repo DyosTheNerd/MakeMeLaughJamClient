@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LocalHandManager : MonoBehaviour
@@ -22,11 +23,20 @@ public class LocalHandManager : MonoBehaviour
     {
         if (!hands.ContainsKey(playerId))
         {
-            GameObject hand = Instantiate(handPrefab, canvas.transform);
-            HandLocal handLocal = hand.GetComponent<HandLocal>();
-            handLocal.playerId = playerId;
-            handLocal.OnHandUpdated(playerId, cards);
-            hands.Add(playerId, hand);
+            if (canvas == null)
+            {
+                Debug.LogError($"Canvas is null {transform.name}");
+                
+            }
+            else
+            {
+                GameObject hand = Instantiate(handPrefab, canvas.transform);
+                HandLocal handLocal = hand.GetComponent<HandLocal>();
+                handLocal.playerId = playerId;
+                handLocal.OnHandUpdated(playerId, cards);
+                hands.Add(playerId, hand);    
+            }
+            
         }
     }
     

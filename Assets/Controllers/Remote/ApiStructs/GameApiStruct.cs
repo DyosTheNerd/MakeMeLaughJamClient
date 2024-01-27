@@ -53,11 +53,5 @@ namespace Remote.ApiStructs
     {
         public StringApiField code;
     }
-
-    [Serializable]
-    public class StringApiField
-    {
-        public string stringValue;
-    }
     
 }
