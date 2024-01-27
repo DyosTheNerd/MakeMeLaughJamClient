@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -29,6 +30,10 @@ public class PlayerManager : MonoBehaviour
 
         interactionManager.CardPlayed += PlayerPlayCard;
 
+        foreach (var player in Lobby.players)
+        {
+            AddPlayer(player.id, player.name);
+        }
     }
 
 
