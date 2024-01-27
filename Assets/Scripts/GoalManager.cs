@@ -7,3 +7,10 @@ public class GoalManager : MonoBehaviour
 
 
 }
+
+[System.Serializable]
+public class Goal
+{
+    public string cardType;
+
+}
