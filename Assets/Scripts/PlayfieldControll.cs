@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayfieldControll : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class PlayfieldControll : MonoBehaviour
         overlordJudging = overlord.GetComponent<OverlordJudging>();
         players = playerManager.GetComponent<PlayerManager>();
 
+        overlordJudging.SatisfiedOverlord += WinEnding;
+        overlordJudging.DissatisfiedOverlord += LoseEnding;
+
         StartCoroutine(RoundsCoroutine(totalRounds));
     }
 
@@ -53,7 +57,8 @@ public class PlayfieldControll : MonoBehaviour
         if (currentRound == totalRounds - 1)
         {
             Debug.Log("End of Game");
-            HandleResult();
+            // Here the Game Ends on an impasse
+            OutOfRoundsEnding();
         }
         else
         {
@@ -66,10 +71,10 @@ public class PlayfieldControll : MonoBehaviour
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
             // sets are players ready to false
-            players.UnreadyPlayers();
+            //players.UnreadyPlayers();
         }
     }
-    private void HandleResult()
+    private void OutOfRoundsEnding()
     {
         int overlordMood = overlord.GetComponent<OverlordJudging>().overlordMood;
 
@@ -85,5 +90,20 @@ public class PlayfieldControll : MonoBehaviour
         {
             Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
         }
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(4);
     }
+
+    private void WinEnding()
+    {
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(3);
+    }
+
+    private void LoseEnding()
+    {
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(2);
+    }
+
 }

@@ -18,6 +18,13 @@ public class OverlordJudging : MonoBehaviour
     public List<int> Numbers;
     RectTransform rectTransform;
 
+    public delegate void OnOverlordSatisfied();
+    public event OnOverlordSatisfied SatisfiedOverlord;
+
+    public delegate void OnOverlordDissatisfied();
+    public event OnOverlordDissatisfied DissatisfiedOverlord;
+
+
     private void Start()
     {
         BuildlikedCardTypes();
@@ -72,22 +79,23 @@ public class OverlordJudging : MonoBehaviour
             }
         }
 
-        //SHOW REACTION  
-        if (overlordMood > 0 || overlordMood < 100)
+        rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
+        Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
+
+        Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
+
+        StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
+
+        //SHOW REACTION
+        if (overlordMood < 0)
         {
-            rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
-            Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
-
-            Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
-
-            StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
+            Debug.Log("ANGER!!!! - YOU ALL WILL DIE!");
+            DissatisfiedOverlord?.Invoke();
         }
-        else
+        else if (overlordMood > 100)
         {
-            if (overlordMood < 0)
-            {
-                Debug.Log("ANGER!!!! - YOU ALL WILL DIE!");
-            }
+            Debug.Log("LAUGHTER!!! -  YOU ALL WIN!!!");
+            SatisfiedOverlord?.Invoke();
         }
 
         //Reset
