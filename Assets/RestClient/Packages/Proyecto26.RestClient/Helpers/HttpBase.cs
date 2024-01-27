@@ -44,7 +44,7 @@ namespace Proyecto26
                     var response = request.CreateWebResponse();
                     if (request.IsValidRequest(options))
                     {
-                        DebugLog(options.EnableDebug, string.Format("RestClient - Response\nUrl: {0}\nMethod: {1}\nStatus: {2}\nResponse: {3}", options.Uri, options.Method, request.responseCode, options.ParseResponseBody ? response.Text : "body not parsed"), false);
+                        DebugLog(false, string.Format("RestClient - Response\nUrl: {0}\nMethod: {1}\nStatus: {2}\nResponse: {3}", options.Uri, options.Method, request.responseCode, options.ParseResponseBody ? response.Text : "body not parsed"), false);
                         callback(null, response);
                         break;
                     }
@@ -125,7 +125,7 @@ namespace Proyecto26
                 }
                 catch (Exception error)
                 {
-                    DebugLog(options.EnableDebug, string.Format("RestClient - Invalid JSON format\nError: {0}", error.Message), true);
+                    DebugLog(true, string.Format("RestClient - Invalid JSON format\nError: {0}", error.Message), true);
                     err = new RequestException(error.Message);
                 }
                 finally
