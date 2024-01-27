@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 85caaea6309570f4484c7eb501b47742, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6685caa9fc5385449b6cfe8d0e4e5aed, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1139,13 +1139,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c13994cd35c63740818d94201787389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfLikedCardTypes: 2
-  likedCardTypes: []
-  overlordMood: 51
-  cardInfluenceOnMood: 10
   PlayerManager: {fileID: 1327201399}
   CardManager: {fileID: 1922532115}
   OverlordMoodPointer: {fileID: 818724824}
+  likedCardTypes: []
+  overlordMood: 51
+  cardInfluenceOnMood: 10
+  numberOfLikedCardTypes: 2
   Numbers: 
 --- !u!4 &1193423567
 Transform:
