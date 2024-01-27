@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -29,6 +30,10 @@ public class PlayerManager : MonoBehaviour
 
         interactionManager.CardPlayed += PlayerPlayCard;
 
+        foreach (var player in Lobby.players)
+        {
+            AddPlayer(player.id, player.name);
+        }
     }
 
 
@@ -48,6 +53,11 @@ public class PlayerManager : MonoBehaviour
         if(roundNumber == 1)
         {
             FillHands();
+            for (int i = 0; i < players.Count; i++)
+            {
+                interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
+            }
+            UnreadyPlayers();
             return;
         }
 
@@ -61,7 +71,7 @@ public class PlayerManager : MonoBehaviour
         {
             interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
         }
-
+        UnreadyPlayers();
     }
 
     public void FillHands()

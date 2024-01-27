@@ -5,10 +5,13 @@ namespace Controllers.Remote
 {
     public class RemoteConfig : MonoBehaviour
     {
-            
         
-        public string baseProjectUrl =
+        public static string SbaseProjectUrl =
             "https://firestore.googleapis.com/v1/projects/makemelaughjam/databases/(default)/documents/games";
+
+        
+        public  string baseProjectUrl =
+           SbaseProjectUrl;
 
         public string gameId = "126875";
         
@@ -18,19 +21,10 @@ namespace Controllers.Remote
         {
             if (instance == null)
             {
-                gameId = generateId();
+                gameId = Lobby.getRoomNumber();
                 instance = this;
             }
         }
-        private string generateId()
-        {
-            string id = "";
-            for (int i = 0; i < 6; i++)
-            {
-                id += Random.Range(0, 10);
-            }
-
-            return id;
-        }
+        
     }
 }
