@@ -10,13 +10,20 @@ public class OverlordJudging : MonoBehaviour
     float pointerMovementSpeed = 1.0f;
 
     [Header("LIKED TYPE OF CARDS")]
-    public List<card> likedCardTypes = new List<card>();
-
+    public List<string> likedCardTypes = new List<string>();
     public int overlordMood = 51;
     public int cardInfluenceOnMood = 1;
+    public int numberOfLikedCardTypes = 2;
     private float changeInMood;
-
+    public List<int> Numbers;
     RectTransform rectTransform;
+
+    public delegate void OnOverlordSatisfied();
+    public event OnOverlordSatisfied SatisfiedOverlord;
+
+    public delegate void OnOverlordDissatisfied();
+    public event OnOverlordDissatisfied DissatisfiedOverlord;
+
 
     private void Start()
     {
@@ -25,7 +32,28 @@ public class OverlordJudging : MonoBehaviour
 
     private void BuildlikedCardTypes()
     {
+        List<string> cardTypes = CardManager.GetComponent<CardManager>().cardTypes;
 
+        //be save with each number only once
+        for (int random = 0; random < cardTypes.Count; random++)
+        {
+            Numbers.Add(random);
+        }
+
+        for (int i = 0; i < numberOfLikedCardTypes; i++)
+        {
+            int random = Random.Range(0, Numbers.Count);
+            int randomNumber = Numbers[random];
+
+            for (int cartCount = 0; cartCount < cardTypes.Count; cartCount++)
+            {
+                if (randomNumber == cartCount)
+                {
+                    likedCardTypes.Add(cardTypes[cartCount]);
+                }
+            }
+            Numbers.Remove(randomNumber);
+        }
     }
 
     public void OverlordJugdgeNow()
@@ -39,9 +67,9 @@ public class OverlordJudging : MonoBehaviour
 
             card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
 
-            foreach (card likedCard in likedCardTypes)
+            foreach (string likedCard in likedCardTypes)
             {
-                if (currentCard.typeOfCard == likedCard.typeOfCard)
+                if (currentCard.typeOfCard == likedCard)
                 {
                     //CHANGE IN MOOD        
                     changeInMood = changeInMood + cardInfluenceOnMood;
@@ -51,19 +79,23 @@ public class OverlordJudging : MonoBehaviour
             }
         }
 
-        //SHOW REACTION  
-        if (overlordMood > 0 || overlordMood < 100)
+        rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
+        Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
+
+        Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
+
+        StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
+
+        //SHOW REACTION
+        if (overlordMood < 0)
         {
-            rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
-            Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
-
-            Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
-
-            StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
+            Debug.Log("ANGER!!!! - YOU ALL WILL DIE!");
+            DissatisfiedOverlord?.Invoke();
         }
-        else
+        else if (overlordMood > 100)
         {
-            Debug.Log("End of Scale");
+            Debug.Log("LAUGHTER!!! -  YOU ALL WIN!!!");
+            SatisfiedOverlord?.Invoke();
         }
 
         //Reset

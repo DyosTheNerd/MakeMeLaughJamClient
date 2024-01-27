@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayfieldControll : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class PlayfieldControll : MonoBehaviour
                 yield return new WaitForSeconds(5);
 
             overlordJudging.OverlordJugdgeNow();
-            
+
             //TODO Add overlord animation wait time thing;
             //yield return new WaitUntil( something something animation complete )
         }
@@ -45,6 +46,9 @@ public class PlayfieldControll : MonoBehaviour
         overlordJudging = overlord.GetComponent<OverlordJudging>();
         players = playerManager.GetComponent<PlayerManager>();
 
+        overlordJudging.SatisfiedOverlord += WinEnding;
+        overlordJudging.DissatisfiedOverlord += LoseEnding;
+
         StartCoroutine(RoundsCoroutine(totalRounds));
     }
 
@@ -53,6 +57,8 @@ public class PlayfieldControll : MonoBehaviour
         if (currentRound == totalRounds - 1)
         {
             Debug.Log("End of Game");
+            // Here the Game Ends on an impasse
+            OutOfRoundsEnding();
         }
         else
         {
@@ -65,7 +71,39 @@ public class PlayfieldControll : MonoBehaviour
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
             // sets are players ready to false
-            players.UnreadyPlayers();
+            //players.UnreadyPlayers();
         }
     }
+    private void OutOfRoundsEnding()
+    {
+        int overlordMood = overlord.GetComponent<OverlordJudging>().overlordMood;
+
+        if (overlordMood < 25)
+        {
+            Debug.Log("That was not good! Not at All!");
+        }
+        else if (overlordMood > 25 && overlordMood < 75 )
+        {
+            Debug.Log("There will be another year for humanity, perhaps.");
+        }
+        else
+        {
+            Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
+        }
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(4);
+    }
+
+    private void WinEnding()
+    {
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(3);
+    }
+
+    private void LoseEnding()
+    {
+        // TODO add a coroutine to delay the scene transition
+        SceneManager.LoadScene(2);
+    }
+
 }

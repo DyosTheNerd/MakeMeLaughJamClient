@@ -53,6 +53,11 @@ public class PlayerManager : MonoBehaviour
         if(roundNumber == 1)
         {
             FillHands();
+            for (int i = 0; i < players.Count; i++)
+            {
+                interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
+            }
+            UnreadyPlayers();
             return;
         }
 
@@ -66,7 +71,7 @@ public class PlayerManager : MonoBehaviour
         {
             interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
         }
-
+        UnreadyPlayers();
     }
 
     public void FillHands()
@@ -152,6 +157,7 @@ public class Player
     {
         this.id = id;
         this.name = name;
+        cardsInHand = new List<int>();
     }
 
     public bool IsValid()
