@@ -12,14 +12,10 @@ public class OverlordJudging : MonoBehaviour
     public List<card> likedCardtypes = new List<card>();
 
     public int overlordMood = 51;
+    public int cardInfluenceOnMood = 1;
     private float changeInMood;
 
     RectTransform rectTransform;
-
-    private void Start()
-    {
-        rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
-    }
 
     public void OverlordJugdgeNow()
     {
@@ -34,7 +30,7 @@ public class OverlordJudging : MonoBehaviour
             {
                 if (currentCard.typeOfCard == likedCard.typeOfCard)
                 {
-                    changeInMood = changeInMood + 1;
+                    changeInMood = changeInMood + cardInfluenceOnMood;
 
                     break;
                 }
@@ -44,12 +40,12 @@ public class OverlordJudging : MonoBehaviour
         //SHOW REACTION  
         if (overlordMood > 0 || overlordMood < 100)
         {
-
-            Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x,rectTransform.anchoredPosition.y + 100.0f);
+            rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
+            Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
 
             Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
 
-            StartCoroutine(LerpFromTo(currentPosition, newPosition, 1.5f));
+            StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
         }
         else
         {
@@ -60,16 +56,13 @@ public class OverlordJudging : MonoBehaviour
         changeInMood = 0;
     }
 
-
-    IEnumerator LerpFromTo(Vector2 pos1, Vector2 pos2, float duration)
+    IEnumerator LerpFromTo(Vector2 currentPosition, Vector2 newPosition, float duration)
     {
         for (
-            float t = 0f;
-            t < duration;
-            t += pointerMovementSpeed * Time.deltaTime
+            float t = 0f; t < duration; t += pointerMovementSpeed * Time.deltaTime
         )
         {
-            transform.position = Vector2.Lerp(pos1, pos2, t / duration);
+            rectTransform.anchoredPosition = Vector2.Lerp(currentPosition, newPosition, t / duration);
             yield return 0;
         }
     }

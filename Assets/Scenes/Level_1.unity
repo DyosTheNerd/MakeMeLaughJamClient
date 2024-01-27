@@ -841,11 +841,14 @@ MonoBehaviour:
   Playfield: {fileID: 1283799709}
   OverlordMoodPointer: {fileID: 818724824}
   likedCardtypes:
-  - typeOfCard: 'dadJoke '
+  - id: 0
+    typeOfCard: 'dadJoke '
     intensity: 0
-  - typeOfCard: 'germanHumor '
+  - id: 0
+    typeOfCard: 'germanHumor '
     intensity: 0
-  - typeOfCard: barJoke
+  - id: 0
+    typeOfCard: barJoke
     intensity: 0
   overlordMood: 51
 --- !u!4 &1193423567
@@ -1015,12 +1018,15 @@ MonoBehaviour:
   totalRounds: 10
   currentRound: 1
   PlayedCards:
-  - typeOfCard: barJoke
+  - id: 0
+    typeOfCard: barJoke
     intensity: 0
-  - typeOfCard: barJoke
+  - id: 0
+    typeOfCard: barJoke
     intensity: 0
   overlord: {fileID: 1193423565}
   counter: {fileID: 411150154}
+  playerManager: {fileID: 0}
 --- !u!4 &1283799711
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,6 +1071,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef110dcfd9c6cf64ab8e1b1b492ace66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HandSize: 5
+  players: []
+  waitingForPlayers: []
 --- !u!4 &1327201401
 Transform:
   m_ObjectHideFlags: 0
@@ -1109,6 +1118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cf860b507a8704dad148f5411fa612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardTypes: []
+  ratingInterval: {x: 0, y: 0}
+  cardDictionary: []
 --- !u!4 &1922532117
 Transform:
   m_ObjectHideFlags: 0
