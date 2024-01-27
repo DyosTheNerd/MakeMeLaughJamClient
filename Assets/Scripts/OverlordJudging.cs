@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class OverlordJudging : MonoBehaviour
 {
+
+
+    [Header("LIKED TYPE OF CARDS")]
+    public int numberOfLikedCardTypes = 2;
+    public List<string> likedCardTypes = new List<string>();
+
+    [Header("MOOD")]
+    public int overlordMood = 51;
+    public int cardInfluenceOnMood = 1;
+    private float changeInMood;
+
+    //GameObjects
     public GameObject PlayerManager;
     public GameObject CardManager;
     public GameObject OverlordMoodPointer;
-    float pointerMovementSpeed = 1.0f;
-
-    [Header("LIKED TYPE OF CARDS")]
-    public List<string> likedCardTypes = new List<string>();
-    public int overlordMood = 51;
-    public int cardInfluenceOnMood = 1;
-    public int numberOfLikedCardTypes = 2;
-    private float changeInMood;
+    
+    //STUFF
     public List<int> Numbers;
     RectTransform rectTransform;
+
+    float pointerMovementSpeed = 1.0f;
 
     private void Start()
     {
