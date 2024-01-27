@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class TestHands : MonoBehaviour
 {
+
+    CardManager cardManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        cardManager = FindAnyObjectByType<CardManager>();
+
         InteractionManager.instance.CardPlayed += (cardId, playerId) =>
         {
             Debug.Log($"Card {cardId} played by {playerId}");
