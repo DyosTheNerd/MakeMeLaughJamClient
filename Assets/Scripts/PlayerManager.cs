@@ -18,26 +18,17 @@ public class PlayerManager : MonoBehaviour
 
     [Header("MANAGERS")]
     CardManager cardManager;
+    InteractionManager interactionManager;
 
-    
+
 
     void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
-        //InteractionManager.instance.HandUpdated += AddHandIfNotExists;
-        //hands = new Dictionary<string, GameObject>();
-    }
+        interactionManager = FindObjectOfType<InteractionManager>();
 
-    private void AddHandIfNotExists(string playerId, CardInteraction[] cards)
-    {
-        //if (!hands.ContainsKey(playerId))
-        //{
-        //    GameObject hand = Instantiate(handPrefab, canvas.transform);
-        //    HandLocal handLocal = hand.GetComponent<HandLocal>();
-        //    handLocal.playerId = playerId;
-        //    handLocal.OnHandUpdated(playerId, cards);
-        //    hands.Add(playerId, hand);
-        //}
+        interactionManager.CardPlayed += PlayerPlayCard;
+
     }
 
     public Player GetPlayer(string id)
@@ -64,7 +55,10 @@ public class PlayerManager : MonoBehaviour
         //if( fun condition )
         PlayerDrawCards();
 
-        //TODO hands changed hook
+        for (int i = 0; i < players.Count; i++)
+        {
+            interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
+        }
     }
 
     public void FillHands()
@@ -94,7 +88,6 @@ public class PlayerManager : MonoBehaviour
     public void ReadyPlayer(string id)
     {
         waitingForPlayers.Remove(id);
-        //TODO player ready hook
     }
 
     // Resets players and played cards for a new round.
@@ -106,8 +99,6 @@ public class PlayerManager : MonoBehaviour
         {
             waitingForPlayers.Add(players[i].id);
         }
-
-        //TODO player reset hook
     }
 
     public bool ArePlayersReady()
@@ -115,16 +106,13 @@ public class PlayerManager : MonoBehaviour
         return waitingForPlayers.Count == 0;
     }
 
-    public void PlayerPlayCard(string playerId, int cardId)
+    public void PlayerPlayCard(int cardId, string playerId)
     {
         playedCards.Add(cardId);
         Player player = GetPlayer(playerId);
 
         // this just removes one instance from the player hand.
         player.PlayCard(cardId);
-
-        //TODO player hand changed hook
-        //TODO player card played hook
     }
     
 

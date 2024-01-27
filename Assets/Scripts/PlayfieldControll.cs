@@ -65,6 +65,8 @@ public class PlayfieldControll : MonoBehaviour
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
+            players.UnreadyPlayers();
+            //update hands hook
         }
     }
 }
