@@ -11,7 +11,10 @@ public class TestHands : MonoBehaviour
         {
             Debug.Log($"Card {cardId} played by {playerId}");
         };
-        
+    }
+
+    public void UpdateHand()
+    {
         InteractionManager.instance.UpdatePlayerHand("a", new CardInteraction[2]{
             new CardInteraction()
             {
@@ -27,6 +30,6 @@ public class TestHands : MonoBehaviour
             }
         });
     }
-
+    
 
 }

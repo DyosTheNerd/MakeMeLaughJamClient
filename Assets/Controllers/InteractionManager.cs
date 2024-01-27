@@ -10,7 +10,9 @@ public struct CardInteraction
     public string type;
 }
 
-
+/// <summary>
+/// Manager for interactions between the game and the player.
+/// </summary>
 public class InteractionManager : MonoBehaviour
 {
     public static InteractionManager instance;
