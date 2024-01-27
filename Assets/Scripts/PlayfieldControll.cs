@@ -33,7 +33,7 @@ public class PlayfieldControll : MonoBehaviour
                 yield return new WaitForSeconds(5);
 
             overlordJudging.OverlordJugdgeNow();
-            
+
             //TODO Add overlord animation wait time thing;
             //yield return new WaitUntil( something something animation complete )
         }
@@ -53,6 +53,7 @@ public class PlayfieldControll : MonoBehaviour
         if (currentRound == totalRounds - 1)
         {
             Debug.Log("End of Game");
+            HandleResult();
         }
         else
         {
@@ -66,6 +67,23 @@ public class PlayfieldControll : MonoBehaviour
             players.RestockHands(currentRound);
             // sets are players ready to false
             players.UnreadyPlayers();
+        }
+    }
+    private void HandleResult()
+    {
+        int overlordMood = overlord.GetComponent<OverlordJudging>().overlordMood;
+
+        if (overlordMood < 25)
+        {
+            Debug.Log("That was not good! Not at All!");
+        }
+        else if (overlordMood > 25 && overlordMood < 75 )
+        {
+            Debug.Log("There will be another year for humanity, perhaps.");
+        }
+        else
+        {
+            Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
         }
     }
 }
