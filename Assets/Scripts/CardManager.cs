@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+}
+[System.Serializable]
+public class card
+{
+    public string typeOfCard;
 
-    // Update is called once per frame
-    void Update()
+    public int intensity;
+    public card(string typeOfCard, int intensity)
     {
-        
+        this.typeOfCard = typeOfCard;
+        this.intensity = intensity;
     }
 }
