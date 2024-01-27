@@ -26,20 +26,19 @@ public class PlayfieldControll : MonoBehaviour
 
     private void Update()
     {
-        //Request Status of player-Input
-
+        //Request Status of player-input
 
         //Start new round on screen when all player-input is received
         if (allPlayersReady == true)
         {
-            //Block further Input
+            //Block further input
 
             HandleRound();
         }
     }
 
     private void HandleRound()
-    {        
+    {
         overlordJudging.OverlordJugdgeNow();
 
         StartNewRound();
@@ -60,7 +59,7 @@ public class PlayfieldControll : MonoBehaviour
             counter.GetComponent<TextMesh>().text = currentRound.ToString();
 
             //Set new Judging (SHOULD IT CHANGE EVERY ROUND?)
-            overlordJudging.BuildJudgeRules();
+            //overlordJudging.BuildJudgeRules();
         }
     }
 }
