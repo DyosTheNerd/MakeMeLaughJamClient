@@ -31,4 +31,12 @@ public class TestPlayers : MonoBehaviour
     {
         players.UnreadyPlayers();
     }
+
+    public void PlayRandomCard()
+    {
+        string chosenPlayers = players.waitingForPlayers[Random.Range(0, players.waitingForPlayers.Count)];
+
+
+    }
+
 }

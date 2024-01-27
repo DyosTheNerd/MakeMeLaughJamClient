@@ -40,6 +40,14 @@ public class PlayerManager : MonoBehaviour
         //}
     }
 
+    public Player GetPlayer(string id)
+    {
+        Player p;
+        bool success = id2Player.TryGetValue(id, out p);
+        if (success) return p;
+        return new Player("null", "null");
+
+    }
 
     public void RestockHands(int roundNumber)
     {
@@ -116,6 +124,11 @@ public class Player
     {
         this.id = id;
         this.name = name;
+    }
+
+    public bool IsValid()
+    {
+        return !id.Equals("null");
     }
 
     public void AddCard(int id)
