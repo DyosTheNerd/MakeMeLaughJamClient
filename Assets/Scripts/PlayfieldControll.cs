@@ -16,9 +16,6 @@ public class PlayfieldControll : MonoBehaviour
     [Header("PLAYERS")]
     PlayerManager players;
 
-    //[Header("ROUND CARDS")]
-    //public List<card> PlayedCards = new List<card>();
-
     [Header("STUFF")]
     public GameObject overlord;
     public GameObject counter;
