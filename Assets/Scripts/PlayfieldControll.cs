@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayfieldControll : MonoBehaviour
 {
     OverlordJudging overlordJudging;
 
-    public bool allPlayersReady = false;
+    bool allPlayersReady = false;
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
-    public int currentRound = 1;
+    public int currentRound = 0;
 
-    [Header("CARDS")]
+    [Header("PLAYERS")]
+    PlayerManager players;
+
+    [Header("ROUND CARDS")]
     public List<card> PlayedCards = new List<card>();
 
     [Header("STUFF")]
     public GameObject overlord;
     public GameObject counter;
+    public GameObject playerManager;
 
     private void Start()
     {
         overlordJudging = overlord.GetComponent<OverlordJudging>();
+        players = playerManager.GetComponent<PlayerManager>();
     }
 
     private void Update()
@@ -41,7 +45,6 @@ public class PlayfieldControll : MonoBehaviour
     private void HandleRound()
     {
         overlordJudging.OverlordJugdgeNow();
-
         StartNewRound();
     }
 
@@ -57,7 +60,13 @@ public class PlayfieldControll : MonoBehaviour
 
             //Set Round
             currentRound = currentRound + 1;
-            counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
+            counter.GetComponent<TextMesh>().text = currentRound.ToString();
+
+            // Refill player hands according to _some_ rule
+            players.RestockHands(currentRound);
+
+            //Set new Judging (SHOULD IT CHANGE EVERY ROUND?)
+            //overlordJudging.BuildJudgeRules();
         }
     }
 }
