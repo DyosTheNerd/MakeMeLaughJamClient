@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // struct representing a card
@@ -7,6 +5,7 @@ public struct CardInteraction
 {
     public int id;
     public string text;
+    public int intensity;
     public string type;
 }
 
