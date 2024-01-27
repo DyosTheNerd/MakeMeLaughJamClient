@@ -147,6 +147,7 @@ public class Player
     {
         this.id = id;
         this.name = name;
+        cardsInHand = new List<int>();
     }
 
     public bool IsValid()
