@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class OverlordJudging : MonoBehaviour
 {
-    public GameObject Playfield;
+    public GameObject PlayerManager;
+    public GameObject CardManager;
     public GameObject OverlordMoodPointer;
     float pointerMovementSpeed = 1.0f;
 
     [Header("LIKED TYPE OF CARDS")]
-    public List<card> likedCardtypes = new List<card>();
+    public List<card> likedCardTypes = new List<card>();
 
     public int overlordMood = 51;
     public int cardInfluenceOnMood = 1;
@@ -17,19 +18,32 @@ public class OverlordJudging : MonoBehaviour
 
     RectTransform rectTransform;
 
+    private void Start()
+    {
+        BuildlikedCardTypes();
+    }
+
+    private void BuildlikedCardTypes()
+    {
+
+    }
+
     public void OverlordJugdgeNow()
     {
-        List<card> playedCardList = Playfield.GetComponent<PlayfieldControll>().PlayedCards;
+        List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
 
         //JUDGE
         for (int i = 0; i < playedCardList.Count; i++)
         {
-            card currentCard = playedCardList[i];
+            int currentCardId = playedCardList[i];
 
-            foreach (card likedCard in likedCardtypes)
+            card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
+
+            foreach (card likedCard in likedCardTypes)
             {
                 if (currentCard.typeOfCard == likedCard.typeOfCard)
                 {
+                    //CHANGE IN MOOD        
                     changeInMood = changeInMood + cardInfluenceOnMood;
 
                     break;

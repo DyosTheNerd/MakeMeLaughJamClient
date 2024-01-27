@@ -16,9 +16,6 @@ public class PlayfieldControll : MonoBehaviour
     [Header("PLAYERS")]
     PlayerManager players;
 
-    [Header("ROUND CARDS")]
-    public List<card> PlayedCards = new List<card>();
-
     [Header("STUFF")]
     public GameObject overlord;
     public GameObject counter;
@@ -32,8 +29,6 @@ public class PlayfieldControll : MonoBehaviour
 
     private void Update()
     {
-        //Request Status of player-input
-
         //Start new round on screen when all player-input is received
         if (allPlayersReady == true)
         {

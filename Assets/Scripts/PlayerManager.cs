@@ -129,9 +129,9 @@ public class PlayerManager : MonoBehaviour
     
 
     //Only valid if players are ready.
-    public IReadOnlyList<int> PlayedCards()
+    public List<int> PlayedCards()
     {
-        return playedCards.AsReadOnly();
+        return playedCards;
     }
 
 }
