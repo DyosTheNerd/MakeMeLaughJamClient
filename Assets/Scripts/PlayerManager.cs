@@ -13,8 +13,8 @@ public class PlayerManager : MonoBehaviour
     public List<Player> players;
     // dictionary to interface with ids
     private Dictionary<string, Player> id2Player = new Dictionary<string, Player>();
-    public List<string> waitingForPlayers = new List<string>(); 
-
+    public List<string> waitingForPlayers = new List<string>();
+    public List<int> playedCards = new List<int>();
 
     [Header("MANAGERS")]
     CardManager cardManager;
@@ -64,6 +64,7 @@ public class PlayerManager : MonoBehaviour
         //if( fun condition )
         PlayerDrawCards();
 
+        //TODO hands changed hook
     }
 
     public void FillHands()
@@ -93,21 +94,46 @@ public class PlayerManager : MonoBehaviour
     public void ReadyPlayer(string id)
     {
         waitingForPlayers.Remove(id);
+        //TODO player ready hook
     }
 
+    // Resets players and played cards for a new round.
     public void UnreadyPlayers()
     {
         waitingForPlayers.Clear();
+        playedCards.Clear();
         for (int i = 0; i < players.Count; i++)
         {
             waitingForPlayers.Add(players[i].id);
         }
+
+        //TODO player reset hook
     }
 
     public bool ArePlayersReady()
     {
         return waitingForPlayers.Count == 0;
     }
+
+    public void PlayerPlayCard(string playerId, int cardId)
+    {
+        playedCards.Add(cardId);
+        Player player = GetPlayer(playerId);
+
+        // this just removes one instance from the player hand.
+        player.PlayCard(cardId);
+
+        //TODO player hand changed hook
+        //TODO player card played hook
+    }
+    
+
+    //Only valid if players are ready.
+    public IReadOnlyList<int> PlayedCards()
+    {
+        return playedCards.AsReadOnly();
+    }
+
 }
 
 
@@ -155,5 +181,7 @@ public class Player
     {
         return cardsInHand.AsReadOnly();
     }
+    
+
 
 }

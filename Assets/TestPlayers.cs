@@ -34,9 +34,14 @@ public class TestPlayers : MonoBehaviour
 
     public void PlayRandomCard()
     {
-        string chosenPlayers = players.waitingForPlayers[Random.Range(0, players.waitingForPlayers.Count)];
+        string chosenPlayerId = players.waitingForPlayers[Random.Range(0, players.waitingForPlayers.Count)];
+        Player chosenPlayer = players.GetPlayer(chosenPlayerId);
 
+        IReadOnlyList<int> cards = chosenPlayer.ShowHand();
 
+        int playedCard = Random.Range(0, cards.Count);
+
+        players.PlayerPlayCard(chosenPlayerId, cards[playedCard]);
     }
 
 }

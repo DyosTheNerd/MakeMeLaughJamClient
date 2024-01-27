@@ -56,6 +56,18 @@ public class CardManager : MonoBehaviour
         GenerateCardDictionary();
     }
 
+    public List<CardInteraction> ConvertToInteraction(IReadOnlyList<int> cardsIds)
+    {
+        List<CardInteraction> cardInteractions = new List<CardInteraction>();
+
+        foreach(var cardId in cardsIds)
+        {
+            cardInteractions.Add(GetCardInfo(cardId).AsInteraction());
+        }
+
+        return cardInteractions;
+    }
+
 }
 
 
@@ -72,7 +84,7 @@ public struct card
         this.intensity = intensity;
     }
 
-    CardInteraction AsInteraction()
+    public CardInteraction AsInteraction()
     {
         return new CardInteraction
         {
