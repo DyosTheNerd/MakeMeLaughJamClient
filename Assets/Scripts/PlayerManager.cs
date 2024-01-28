@@ -47,30 +47,30 @@ public class PlayerManager : MonoBehaviour
 
     public void RestockHands(int roundNumber)
     {
-        // for the first 
-        if(roundNumber == 1)
-        {
+        //// for the first 
+        //if(roundNumber == 1)
+        //{
             FillHands();
             for (int i = 0; i < players.Count; i++)
             {
                 interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
             }
             UnreadyPlayers();
-            return;
-        }
+        //    return;
+        //}
 
-        // Condition for card draw.
-        // E.G. if(roundNumber <=5 or roundNumber % 2 == 1)
-        //  for replenishing cards only until round 5 and then only on rounds 7 and 9
-        //if( fun condition )
-        PlayerDrawCards();
+        //// Condition for card draw.
+        //// E.G. if(roundNumber <=5 or roundNumber % 2 == 1)
+        ////  for replenishing cards only until round 5 and then only on rounds 7 and 9
+        ////if( fun condition )
+        //PlayerDrawCards();
 
-        for (int i = 0; i < players.Count; i++)
-        {
+        //for (int i = 0; i < players.Count; i++)
+        //{
             
-            interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
-        }
-        UnreadyPlayers();
+        //    interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
+        //}
+        //UnreadyPlayers();
     }
 
     public void FillHands()
@@ -78,7 +78,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Filling hands");
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].AddCards(cardManager.DrawCards(HandSize));
+            players[i].AddCards(cardManager.DrawCards(HandSize - players[i].cardsInHand.Count));
         }
     }
 
