@@ -92,10 +92,10 @@ public class Cardholder : MonoBehaviour
             //Change Lights on Card
             for (int countOfLights = 0; countOfLights < 10; countOfLights++)
             {
-                //if (ListOfIntesity.Count != 0)
+                if (ListOfIntesity.Count != 0)
                 {
 
-                    if (ListOfIntesity[i] < countOfLights)
+                    if (ListOfIntesity[i] > countOfLights)
                     {
                         cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
 
@@ -106,9 +106,9 @@ public class Cardholder : MonoBehaviour
         }
 
         //Clean-up numberOfType-list
-        typeOfCard.Clear();
-        ListOfIntesity.Clear();
-        countOfIntesity.Clear();
+        // typeOfCard.Clear();
+        // ListOfIntesity.Clear();
+        // countOfIntesity.Clear();
 
         foreach (string type in typeOfCard)
         {
