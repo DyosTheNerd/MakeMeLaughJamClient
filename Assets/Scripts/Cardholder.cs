@@ -44,6 +44,7 @@ public class Cardholder : MonoBehaviour
         }
     }
 
+
     public void SetCardUI()
     {
         List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
@@ -51,7 +52,6 @@ public class Cardholder : MonoBehaviour
         //Gettings Infos for playedCards and Store
         for (int i = 0; i < playedCardList.Count; i++)
         {
-
             //CurrentCard
             int currentCardId = playedCardList[i];
             card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
@@ -82,7 +82,7 @@ public class Cardholder : MonoBehaviour
         }
 
         //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 7; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
 
@@ -94,12 +94,9 @@ public class Cardholder : MonoBehaviour
             {
                 if (ListOfIntesity.Count != 0)
                 {
-
                     if (ListOfIntesity[i] > countOfLights)
                     {
                         cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
-
-                        Debug.Log("Light Set");
                     }
                 }
             }
@@ -110,10 +107,28 @@ public class Cardholder : MonoBehaviour
         // ListOfIntesity.Clear();
         // countOfIntesity.Clear();
 
-        foreach (string type in typeOfCard)
+        foreach (int fuck in numberOfType)
         {
-            numberOfType.Add(0);
+            numberOfType[fuck] = 0;
         }
     }
 
+
+    public void ClearUI()
+    {
+        //HANDLING STATUS WHEN INFORMATIONS ARE Catched
+        for (int i = 0; i < 8; i++)
+        {
+            cardUI = this.gameObject.transform.GetChild(i);
+
+            //Change Count on Card
+            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0";
+
+            //Change Lights on Card
+            for (int countOfLights = 0; countOfLights < 10; countOfLights++)
+            {
+                cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = false;
+            }
+        }
+    }
 }
