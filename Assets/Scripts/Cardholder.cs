@@ -73,7 +73,6 @@ public class Cardholder : MonoBehaviour
 
 
             //Clean-up numberOfType-list
-            typeOfCard.Clear();
             ListOfIntesity.Clear();
             countOfIntesity.Clear();
 
