@@ -70,6 +70,13 @@ public class Cardholder : MonoBehaviour
                     break;
                 }
             }
+
+
+            //Clean-up numberOfType-list
+            typeOfCard.Clear();
+            ListOfIntesity.Clear();
+            countOfIntesity.Clear();
+
         }
 
         //Average of card intensity
@@ -82,12 +89,14 @@ public class Cardholder : MonoBehaviour
         }
 
         //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
 
+            Debug.Log(cardUI.name);
+
             //Change Count on Card
-            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = numberOfType[i].ToString();
+            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = countOfIntesity[i].ToString();
 
             //Change Lights on Card
             for (int countOfLights = 0; countOfLights < 10; countOfLights++)
@@ -102,14 +111,9 @@ public class Cardholder : MonoBehaviour
             }
         }
 
-        //Clean-up numberOfType-list
-        // typeOfCard.Clear();
-        // ListOfIntesity.Clear();
-        // countOfIntesity.Clear();
-
-        foreach (int fuck in numberOfType)
+        for (int i = 0; i < 8; i++)
         {
-            numberOfType[fuck] = 0;
+            numberOfType[i] = 0;
         }
     }
 
