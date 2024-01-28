@@ -55,7 +55,7 @@ public class PlayerManager : MonoBehaviour
             FillHands();
             for (int i = 0; i < players.Count; i++)
             {
-                interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
+                interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
             }
             UnreadyPlayers();
             return;
@@ -69,7 +69,8 @@ public class PlayerManager : MonoBehaviour
 
         for (int i = 0; i < players.Count; i++)
         {
-            interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray());
+            
+            interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
         }
         UnreadyPlayers();
     }
@@ -119,8 +120,13 @@ public class PlayerManager : MonoBehaviour
         return waitingForPlayers.Count == 0;
     }
 
-    public void PlayerPlayCard(int cardId, string playerId)
+    public void PlayerPlayCard(int cardId, string playerId, int forRoundNumber)
     {
+        // @andre
+        if (forRoundNumber != 0)
+        {
+            return;
+        }
         // if the program is not waiting for this player anymore
         // we can discard this event
         if (!waitingForPlayers.Contains(playerId))
