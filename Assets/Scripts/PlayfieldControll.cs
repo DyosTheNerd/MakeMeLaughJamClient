@@ -35,11 +35,13 @@ public class PlayfieldControll : MonoBehaviour
             while (players.ArePlayersReady() != true)
                 yield return new WaitForSeconds(3);
 
+            cardHolder.SetCardUI();
+
             overlordJudging.OverlordJugdgeNow();
 
             //TODO Add overlord animation wait time thing;
             yield return new WaitForSeconds(5);
-                //new WaitUntil( something something animation complete )
+            //new WaitUntil( something something animation complete )
         }
 
     }
@@ -71,7 +73,6 @@ public class PlayfieldControll : MonoBehaviour
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // TODO update round UI here.
-            cardHolder.SetCardUI();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
