@@ -21,9 +21,7 @@ public class PlayerManager : MonoBehaviour
     CardManager cardManager;
     InteractionManager interactionManager;
     PlayfieldControll flowControl;
-
-    
-
+   
     void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
@@ -37,8 +35,6 @@ public class PlayerManager : MonoBehaviour
             AddPlayer(player.id, player.name);
         }
     }
-
-
 
     public Player GetPlayer(string id)
     {

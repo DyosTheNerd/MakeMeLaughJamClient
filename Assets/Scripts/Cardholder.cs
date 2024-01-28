@@ -72,7 +72,7 @@ public class Cardholder : MonoBehaviour
         }
 
         //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
 
@@ -82,7 +82,7 @@ public class Cardholder : MonoBehaviour
             //Change Lights on Card by Bools
 
 
-            for (int countOfLights = 0; countOfLights < 10; i++)
+            for (int countOfLights = 0; countOfLights < 10; countOfLights++)
             {
                 cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
             }
