@@ -67,16 +67,19 @@ public class OverlordJudging : MonoBehaviour
 
             card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
 
-            foreach (string likedCard in likedCardTypes)
+            if (likedCardTypes.Contains(currentCard.typeOfCard))
             {
-                if (currentCard.typeOfCard == likedCard)
-                {
-                    //CHANGE IN MOOD        
+                    //Positive CHANGE IN MOOD        
                     changeInMood = changeInMood + cardInfluenceOnMood;
-
-                    break;
-                }
             }
+            else
+            {   
+                //Negative CHANGE IN MOOD        
+                changeInMood = changeInMood - cardInfluenceOnMood;
+            }
+
+                
+            
         }
 
         rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
