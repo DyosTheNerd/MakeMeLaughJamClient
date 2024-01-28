@@ -28,13 +28,15 @@ public class CardManager : MonoBehaviour
         {
             for (int j = 0; j <= ratingInterval.y - ratingInterval.x; j++)
             {
-                cardDictionary.Add(new card(cardDictionary.Count, cardTypes[i], ratingInterval.x + j));
+                int s = cardDictionary.Count;
+                cardDictionary.Add(new card(s, cardTypes[i], ratingInterval.x + j));
             }
         }
     }
 
     public card GetCardInfo(int id)
     {
+        Debug.Log("Card ID : " + id);
         return cardDictionary[id];
     }
 
@@ -45,7 +47,7 @@ public class CardManager : MonoBehaviour
         {
             cards.Add(DrawCard());
         }
-        return new List<int>();
+        return cards;
     }
 
     public int DrawCard()
