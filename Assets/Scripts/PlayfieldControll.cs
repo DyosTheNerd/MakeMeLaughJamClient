@@ -34,7 +34,7 @@ public class PlayfieldControll : MonoBehaviour
 
             while (players.ArePlayersReady() != true)
                 yield return new WaitForSeconds(3);
-
+            
             overlordJudging.OverlordJugdgeNow();
 
             //TODO Add overlord animation wait time thing;
