@@ -50,6 +50,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jokeDialogPrefab: {fileID: 4630331808870010873, guid: 58d3ad89e5c67f546b54bf7aede74975, type: 3}
+  portraits:
+  - {fileID: 21300000, guid: c857ef666026d5d469eb4c985d83bf7d, type: 3}
+  - {fileID: 21300000, guid: 7dad417455fba984eb675d49b4d20c7d, type: 3}
+  - {fileID: 21300000, guid: 5c5c244dfcbdc3d428fdee42179cf3d0, type: 3}
+  - {fileID: 21300000, guid: 608fb450519d5694c958bbb54e26cdcd, type: 3}
+  - {fileID: 21300000, guid: 965822b038e9d0641b356c1d494b1bc0, type: 3}
+  - {fileID: 21300000, guid: 2ca7f656f2546f44f885aeaa85c56b7c, type: 3}
+  - {fileID: 21300000, guid: 41d15f5c909fed3458fd143c5f3e294d, type: 3}
+  - {fileID: 21300000, guid: fdfd07ab2335f794ba59e8d8c159f324, type: 3}
+  - {fileID: 21300000, guid: 6f4c415462d607144bc499113560af61, type: 3}
+  - {fileID: 21300000, guid: 6f4c415462d607144bc499113560af61, type: 3}
+  - {fileID: 21300000, guid: e60f5ce0953de2f4c8d1a35be12e00ae, type: 3}
+  - {fileID: 21300000, guid: c892773b03fba5d429cc407dcdf62b29, type: 3}
+  - {fileID: 21300000, guid: 623c48f357c2bab48bd9bc8117762283, type: 3}
+  - {fileID: 21300000, guid: 8aa1cf05f260b534a849f2f8a63849d7, type: 3}
+  - {fileID: 21300000, guid: 1f4a62362fdd839478741d2688c9b381, type: 3}
 --- !u!1001 &1615251435901612108
 PrefabInstance:
   m_ObjectHideFlags: 0
