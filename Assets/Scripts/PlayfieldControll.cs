@@ -12,7 +12,7 @@ public class PlayfieldControll : MonoBehaviour
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
-    int currentRound = 0;
+    public int currentRound = 0;
 
     [Header("PLAYERS")]
     PlayerManager players;

@@ -20,13 +20,15 @@ public class PlayerManager : MonoBehaviour
     [Header("MANAGERS")]
     CardManager cardManager;
     InteractionManager interactionManager;
+    PlayfieldControll flowControl;
 
-
+    
 
     void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
         interactionManager = FindObjectOfType<InteractionManager>();
+        flowControl = FindObjectOfType<PlayfieldControll>();
 
         interactionManager.CardPlayed += PlayerPlayCard;
 
