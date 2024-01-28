@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayfieldControll : MonoBehaviour
 {
     OverlordJudging overlordJudging;
+    Cardholder cardHolder;
 
     //public bool allPlayersReady = false;
 
@@ -19,6 +20,7 @@ public class PlayfieldControll : MonoBehaviour
 
     [Header("STUFF")]
     public GameObject overlord;
+    public GameObject cards;
     public GameObject counter;
     public GameObject playerManager;
 
@@ -44,6 +46,7 @@ public class PlayfieldControll : MonoBehaviour
     private void Start()
     {
         overlordJudging = overlord.GetComponent<OverlordJudging>();
+        cardHolder = cards.GetComponent<Cardholder>();
         players = playerManager.GetComponent<PlayerManager>();
 
         overlordJudging.SatisfiedOverlord += WinEnding;
@@ -67,6 +70,7 @@ public class PlayfieldControll : MonoBehaviour
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // TODO update round UI here.
+            cardHolder.SetCardUI();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
@@ -82,7 +86,7 @@ public class PlayfieldControll : MonoBehaviour
         {
             Debug.Log("That was not good! Not at All!");
         }
-        else if (overlordMood > 25 && overlordMood < 75 )
+        else if (overlordMood > 25 && overlordMood < 75)
         {
             Debug.Log("There will be another year for humanity, perhaps.");
         }
