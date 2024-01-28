@@ -34,7 +34,8 @@ public class HandRemote : MonoBehaviour
                     {
                         string playerId = doc.fields.playerId.stringValue;
                         int cardId = int.Parse(doc.fields.id.integerValue);
-                        PlayCard(playerId, cardId);
+                        int roundNumber = int.Parse(doc.fields.roundNumber.integerValue);
+                        PlayCard(playerId, cardId, roundNumber);
                     }
                 }).Catch(reject => { Debug.Log(reject.Message); });
 
@@ -43,9 +44,9 @@ public class HandRemote : MonoBehaviour
         }
     }
 
-    public void OnHandUpdated(string playerId, CardInteraction[] cards)
+    public void OnHandUpdated(string playerId, CardInteraction[] cards, int roundNumber)
     {
-        HandApiStruct handApiStruct = HandApiStruct.FromHand(playerId, cards);
+        HandApiStruct handApiStruct = HandApiStruct.FromHand(playerId, cards, roundNumber);
 
         RestClient.Patch<HandApiStruct>(
                 $"{RemoteConfig.instance.baseProjectUrl}/{RemoteConfig.instance.gameId}/hands/hand_{playerId}",
@@ -58,9 +59,9 @@ public class HandRemote : MonoBehaviour
     }
 
     // function to call when a card is played
-    public void PlayCard(string playerId, int cardId)
+    public void PlayCard(string playerId, int cardId, int roundNumber )
     {
         Debug.Log($"Playing card {cardId} for player {playerId}");
-        InteractionManager.instance.PlayCard(cardId, playerId);
+        InteractionManager.instance.PlayCard(cardId, playerId, roundNumber);
     }
 }

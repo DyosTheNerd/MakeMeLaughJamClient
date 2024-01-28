@@ -20,5 +20,6 @@ namespace Remote.ApiStructs
     {
         public StringIntegerField id;
         public StringApiField playerId;
+        public StringIntegerField roundNumber;
     }
 }

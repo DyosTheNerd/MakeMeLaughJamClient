@@ -41,7 +41,7 @@ public class TestPlayers : MonoBehaviour
 
         int playedCard = Random.Range(0, cards.Count);
 
-        players.PlayerPlayCard( cards[playedCard], chosenPlayerId);
+        players.PlayerPlayCard( cards[playedCard], chosenPlayerId,0);
     }
 
 }

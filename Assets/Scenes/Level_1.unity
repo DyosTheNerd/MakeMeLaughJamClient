@@ -706,9 +706,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0964ae325a8a6234caad3f30d7b4ad31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerManager: {fileID: 0}
-  CardManager: {fileID: 0}
-  numberOfType: 
+  PlayerManager: {fileID: 1843187860}
+  CardManager: {fileID: 1733449268}
+  numberOfType: 0000000000000000000000000000000000000000000000000000000000000000
   typeOfCard:
   - 
   - 
@@ -718,7 +718,6 @@ MonoBehaviour:
   - 
   - 
   - 
-  ListOfIntesity: 
   BoolsOfIntesity: 00000000000000000000
 --- !u!1 &296509518
 GameObject:
@@ -2420,6 +2419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalRounds: 10
+  currentRound: 0
   overlord: {fileID: 1193423565}
   cards: {fileID: 260662863}
   counter: {fileID: 411150154}

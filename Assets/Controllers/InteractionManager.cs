@@ -17,10 +17,10 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager instance;
     
     // Event with two integer parameters
-    public delegate void OnCardPlayed(int cardId, string playerId);
+    public delegate void OnCardPlayed(int cardId, string playerId, int roundNumber);
     public event OnCardPlayed CardPlayed;
     
-    public delegate void OnUpdatePlayerHand(string playerId, CardInteraction[] cards);
+    public delegate void OnUpdatePlayerHand(string playerId, CardInteraction[] cards, int roundNumber);
     public event OnUpdatePlayerHand HandUpdated;
     
     void Awake()
@@ -36,13 +36,13 @@ public class InteractionManager : MonoBehaviour
         
     }
 
-    public void PlayCard(int cardId, string playerId)
+    public void PlayCard(int cardId, string playerId, int roundNumber)
     {
-        CardPlayed?.Invoke(cardId, playerId);
+        CardPlayed?.Invoke(cardId, playerId,  roundNumber);
     }
     
-    public void UpdatePlayerHand(string playerId, CardInteraction[] cards)
+    public void UpdatePlayerHand(string playerId, CardInteraction[] cards, int roundNumber)
     {
-        HandUpdated?.Invoke(playerId, cards);
+        HandUpdated?.Invoke(playerId, cards, roundNumber);
     }
 }

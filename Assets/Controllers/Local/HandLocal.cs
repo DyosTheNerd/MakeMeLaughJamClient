@@ -14,7 +14,7 @@ public class HandLocal : MonoBehaviour
         InteractionManager.instance.HandUpdated += OnHandUpdated;        
     }
     
-    public void OnHandUpdated(string playerId, CardInteraction[] cards)
+    public void OnHandUpdated(string playerId, CardInteraction[] cards, int roundNr)
     {
         if (playerId == this.playerId)
         {
@@ -36,7 +36,7 @@ public class HandLocal : MonoBehaviour
     {
         Debug.Log($"Playing card {cardId} for player {playerId}");
         
-        InteractionManager.instance.PlayCard(cardId, playerId);
+        InteractionManager.instance.PlayCard(cardId, playerId, 0);
     }
     
     
