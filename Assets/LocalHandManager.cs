@@ -19,8 +19,9 @@ public class LocalHandManager : MonoBehaviour
         hands = new Dictionary<string, GameObject>();
     }
 
-    private void AddHandIfNotExists(string playerId, CardInteraction[] cards)
+    private void AddHandIfNotExists(string playerId, CardInteraction[] cards, int roundNR)
     {
+        // @andre fix roundNR
         if (!hands.ContainsKey(playerId))
         {
             if (canvas == null)
@@ -33,7 +34,7 @@ public class LocalHandManager : MonoBehaviour
                 GameObject hand = Instantiate(handPrefab, canvas.transform);
                 HandLocal handLocal = hand.GetComponent<HandLocal>();
                 handLocal.playerId = playerId;
-                handLocal.OnHandUpdated(playerId, cards);
+                handLocal.OnHandUpdated(playerId, cards,roundNR);
                 hands.Add(playerId, hand);    
             }
             

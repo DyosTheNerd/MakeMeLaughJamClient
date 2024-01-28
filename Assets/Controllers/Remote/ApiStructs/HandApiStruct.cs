@@ -10,7 +10,7 @@ namespace Remote.ApiStructs
 
         public HandWrapperStruct fields = new HandWrapperStruct();
         
-        public  static HandApiStruct FromHand(string playerId, CardInteraction[] cards)
+        public  static HandApiStruct FromHand(string playerId, CardInteraction[] cards, int roundNumber)
         {
             HandApiStruct handApiStruct = new HandApiStruct();
 
@@ -26,6 +26,9 @@ namespace Remote.ApiStructs
                     {
                         values = new CardArrayValues[cards.Length]
                     }
+                }, roundNumber = new StringIntegerField()
+                {
+                    integerValue = $"{roundNumber}"
                 }
             };
             for (int i = 0; i < cards.Length; i++)
@@ -68,6 +71,7 @@ namespace Remote.ApiStructs
     [Serializable]
     public class HandWrapperStruct
     {
+        public StringIntegerField roundNumber;
         public StringApiField playerId;
         public CardApiStruct cards;
     }

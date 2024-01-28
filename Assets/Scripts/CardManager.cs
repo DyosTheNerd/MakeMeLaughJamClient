@@ -5,8 +5,8 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     public static CardManager instance;
-    
-    
+
+
     [Header("Parameters")]
     public List<string> cardTypes;
     // How many cards to populate the card dictionary with.
@@ -55,18 +55,18 @@ public class CardManager : MonoBehaviour
         return Random.Range(0, cardDictionary.Count);
     }
 
-
-    public void Start()
+    private void Start()
     {
         GenerateCardDictionary();
         instance = this;
     }
 
+
     public List<CardInteraction> ConvertToInteraction(IReadOnlyList<int> cardsIds)
     {
         List<CardInteraction> cardInteractions = new List<CardInteraction>();
 
-        foreach(var cardId in cardsIds)
+        foreach (var cardId in cardsIds)
         {
             cardInteractions.Add(GetCardInfo(cardId).AsInteraction());
         }

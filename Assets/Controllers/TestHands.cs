@@ -12,9 +12,9 @@ public class TestHands : MonoBehaviour
     {
         cardManager = FindAnyObjectByType<CardManager>();
 
-        InteractionManager.instance.CardPlayed += (cardId, playerId) =>
+        InteractionManager.instance.CardPlayed += (cardId, playerId, roundnr) =>
         {
-            Debug.Log($"Card {cardId} played by {playerId}");
+            Debug.Log($"Card {cardId} played by {playerId} - {roundnr}");
         };
     }
 
@@ -33,7 +33,7 @@ public class TestHands : MonoBehaviour
                 text = "test2",
                 type = "type2"
             }
-        });
+        }, 0);
     }
     
 
