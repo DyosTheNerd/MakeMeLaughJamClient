@@ -68,6 +68,7 @@ public class PlayfieldControll : MonoBehaviour
         }
         else
         {
+            cardHolder.ClearUI();
             //Set Round
             currentRound = currentRound + 1;
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
