@@ -21,7 +21,6 @@ public class LocalHandManager : MonoBehaviour
 
     private void AddHandIfNotExists(string playerId, CardInteraction[] cards, int roundNR)
     {
-        // @andre fix roundNR
         if (!hands.ContainsKey(playerId))
         {
             if (canvas == null)
