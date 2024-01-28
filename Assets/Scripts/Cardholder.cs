@@ -51,6 +51,7 @@ public class Cardholder : MonoBehaviour
         //Gettings Infos for playedCards and Store
         for (int i = 0; i < playedCardList.Count; i++)
         {
+
             //CurrentCard
             int currentCardId = playedCardList[i];
             card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
@@ -58,9 +59,10 @@ public class Cardholder : MonoBehaviour
             //Increase COUNT OF CARDS
             numberOfType[i] = numberOfType[i] + 1;
 
-            for (int placeInList = 0; i < 7; i++)
+
+            for (int placeInList = 0; placeInList < 8; placeInList++)
             {
-                if (currentCard.typeOfCard == typeOfCard[placeInList])
+                if (currentCard.typeOfCard == CardManager.GetComponent<CardManager>().cardTypes[placeInList])
                 {
                     //Ad Intensity tot Intensity of Card (total in between)
                     ListOfIntesity[placeInList] = ListOfIntesity[placeInList] + currentCard.intensity;
@@ -73,11 +75,14 @@ public class Cardholder : MonoBehaviour
         //Average of card intensity
         for (int intensity = 0; intensity < ListOfIntesity.Count; intensity++)
         {
-            ListOfIntesity[intensity] = ListOfIntesity[intensity] / countOfIntesity[intensity];
+            if (ListOfIntesity[intensity] != 0 && countOfIntesity[intensity] != 0)
+            {
+                ListOfIntesity[intensity] = ListOfIntesity[intensity] / countOfIntesity[intensity];
+            }
         }
 
         //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
 
@@ -90,18 +95,20 @@ public class Cardholder : MonoBehaviour
                 if (ListOfIntesity.Count != 0)
                 {
 
-                    if (ListOfIntesity[i] < countOfLights)
+                    if (ListOfIntesity[i] > countOfLights)
                     {
                         cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
+
+                        Debug.Log("Light Set");
                     }
                 }
             }
         }
 
         //Clean-up numberOfType-list
-        typeOfCard.Clear();
-        ListOfIntesity.Clear();
-        countOfIntesity.Clear();
+        // typeOfCard.Clear();
+        // ListOfIntesity.Clear();
+        // countOfIntesity.Clear();
 
         foreach (string type in typeOfCard)
         {
