@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+    public static CardManager instance;
+    
+    
     [Header("Parameters")]
     public List<string> cardTypes;
     // How many cards to populate the card dictionary with.
@@ -54,6 +57,7 @@ public class CardManager : MonoBehaviour
     public void Start()
     {
         GenerateCardDictionary();
+        instance = this;
     }
 
     public List<CardInteraction> ConvertToInteraction(IReadOnlyList<int> cardsIds)
