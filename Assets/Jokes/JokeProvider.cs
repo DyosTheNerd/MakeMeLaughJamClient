@@ -68,11 +68,8 @@ public class JokeProvider : MonoBehaviour
             {
                 foreach (var doc in response.documents)
                 {
-                    Debug.Log($"{doc.fields.id.stringValue}, {doc.fields.text.stringValue}");
                     jokeDB.Add(doc.fields.id.stringValue, doc.fields.text.stringValue);
-                    
                 }
-
                 Debug.Log(jokeDB.Count);
                 initialized = true;
             })

@@ -9,7 +9,7 @@ namespace Controllers.Remote
         public static string SbaseProjectUrl =
             "https://firestore.googleapis.com/v1/projects/makemelaughjam/databases/(default)/documents/games";
 
-        public static string sJokeDbUrl =   "https://firestore.googleapis.com/v1/projects/makemelaughjam/databases/(default)/documents/jokes/";
+        public static string sJokeDbUrl =   "https://firestore.googleapis.com/v1/projects/makemelaughjam/databases/(default)/documents/jokes?pageSize=100";
         
         
         public  string baseProjectUrl =
