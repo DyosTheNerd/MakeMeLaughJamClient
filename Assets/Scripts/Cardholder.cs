@@ -13,8 +13,8 @@ public class Cardholder : MonoBehaviour
 
     public List<int> numberOfType;
     public List<string> typeOfCard;
-    public List<bool> ListOfIntesity;
-    public List<bool> BoolsOfIntesity;
+    public List<int> countOfIntesity;
+    public List<int> ListOfIntesity;
 
     private void Start()
     {
@@ -22,12 +22,6 @@ public class Cardholder : MonoBehaviour
         {
             //Default number on zero
             numberOfType.Add(0);
-        }
-
-        for (int i = 0; i < 9; i++)
-        {
-            //BoolsOfIntesity for Lights at cards
-            BoolsOfIntesity[i] = false;
         }
 
         HandleStatus();
@@ -38,8 +32,6 @@ public class Cardholder : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
-
-            Debug.Log(numberOfType[i]);
 
             //Change Count on Card
             cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = numberOfType[i].ToString();
@@ -66,30 +58,51 @@ public class Cardholder : MonoBehaviour
             //Increase COUNT OF CARDS
             numberOfType[i] = numberOfType[i] + 1;
 
-            //Catch Intensity
-            //ListOfIntesity.Add(currentCard.intensity);
+            for (int placeInList = 0; i < 7; i++)
+            {
+                if (currentCard.typeOfCard == typeOfCard[placeInList])
+                {
+                    //Ad Intensity tot Intensity of Card (total in between)
+                    ListOfIntesity[placeInList] = ListOfIntesity[placeInList] + currentCard.intensity;
+                    countOfIntesity[placeInList] = countOfIntesity[placeInList] + 1;
+                    break;
+                }
+            }
+        }
 
+        //Average of card intensity
+        for (int intensity = 0; intensity < ListOfIntesity.Count; intensity++)
+        {
+            ListOfIntesity[intensity] = ListOfIntesity[intensity] / countOfIntesity[intensity];
         }
 
         //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 7; i++)
         {
             cardUI = this.gameObject.transform.GetChild(i);
 
             //Change Count on Card
             cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = numberOfType[i].ToString();
 
-            //Change Lights on Card by Bools
-
-
+            //Change Lights on Card
             for (int countOfLights = 0; countOfLights < 10; countOfLights++)
             {
-                cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
+                if (ListOfIntesity.Count != 0)
+                {
+
+                    if (ListOfIntesity[i] < countOfLights)
+                    {
+                        cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
+                    }
+                }
             }
         }
 
         //Clean-up numberOfType-list
         typeOfCard.Clear();
+        ListOfIntesity.Clear();
+        countOfIntesity.Clear();
+
         foreach (string type in typeOfCard)
         {
             numberOfType.Add(0);
