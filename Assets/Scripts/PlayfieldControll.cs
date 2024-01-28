@@ -7,18 +7,20 @@ using UnityEngine.SceneManagement;
 public class PlayfieldControll : MonoBehaviour
 {
     OverlordJudging overlordJudging;
+    Cardholder cardHolder;
 
     //public bool allPlayersReady = false;
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
-    public int currentRound = 0;
+    int currentRound = 0;
 
     [Header("PLAYERS")]
     PlayerManager players;
 
     [Header("STUFF")]
     public GameObject overlord;
+    public GameObject cards;
     public GameObject counter;
     public GameObject playerManager;
 
@@ -31,12 +33,13 @@ public class PlayfieldControll : MonoBehaviour
             StartNewRound();
 
             while (players.ArePlayersReady() != true)
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(3);
 
             overlordJudging.OverlordJugdgeNow();
 
             //TODO Add overlord animation wait time thing;
-            //yield return new WaitUntil( something something animation complete )
+            yield return new WaitForSeconds(5);
+                //new WaitUntil( something something animation complete )
         }
 
     }
@@ -44,6 +47,7 @@ public class PlayfieldControll : MonoBehaviour
     private void Start()
     {
         overlordJudging = overlord.GetComponent<OverlordJudging>();
+        cardHolder = cards.GetComponent<Cardholder>();
         players = playerManager.GetComponent<PlayerManager>();
 
         overlordJudging.SatisfiedOverlord += WinEnding;
@@ -67,6 +71,7 @@ public class PlayfieldControll : MonoBehaviour
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // TODO update round UI here.
+            cardHolder.SetCardUI();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
@@ -82,7 +87,7 @@ public class PlayfieldControll : MonoBehaviour
         {
             Debug.Log("That was not good! Not at All!");
         }
-        else if (overlordMood > 25 && overlordMood < 75 )
+        else if (overlordMood > 25 && overlordMood < 75)
         {
             Debug.Log("There will be another year for humanity, perhaps.");
         }
