@@ -96,19 +96,19 @@ public class PlayfieldControll : MonoBehaviour
             Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
         }
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("WinSomeLoseSomeScreen");
     }
 
     private void WinEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("WinScreen");
     }
 
     private void LoseEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("LoseScreen");
     }
 
 }
