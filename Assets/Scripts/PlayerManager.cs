@@ -76,6 +76,7 @@ public class PlayerManager : MonoBehaviour
 
     public void FillHands()
     {
+        Debug.Log("Filling hands");
         for (int i = 0; i < players.Count; i++)
         {
             players[i].AddCards(cardManager.DrawCards(HandSize));
@@ -125,20 +126,19 @@ public class PlayerManager : MonoBehaviour
         // we can discard this event
         if (!waitingForPlayers.Contains(playerId))
             return;
+        ReadyPlayer(playerId);
+        Player player = GetPlayer(playerId);
+        player.PlayCard(cardId);
 
         playedCards.Add(cardId);
-        Player player = GetPlayer(playerId);
 
-        // this just removes one instance from the player hand.
-        player.PlayCard(cardId);
-        ReadyPlayer(playerId);
     }
     
 
     //Only valid if players are ready.
     public List<int> PlayedCards()
     {
-        return playedCards;
+        return new List<int>(playedCards);
     }
 
 }

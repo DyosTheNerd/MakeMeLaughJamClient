@@ -13,7 +13,7 @@ public class PlayfieldControll : MonoBehaviour
 
     [Header("ROUNDS")]
     public int totalRounds = 10;
-    public int currentRound = 0;
+    int currentRound = 0;
 
     [Header("PLAYERS")]
     PlayerManager players;
@@ -33,12 +33,13 @@ public class PlayfieldControll : MonoBehaviour
             StartNewRound();
 
             while (players.ArePlayersReady() != true)
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(3);
 
             overlordJudging.OverlordJugdgeNow();
 
             //TODO Add overlord animation wait time thing;
-            //yield return new WaitUntil( something something animation complete )
+            yield return new WaitForSeconds(5);
+                //new WaitUntil( something something animation complete )
         }
 
     }
