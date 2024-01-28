@@ -14,6 +14,8 @@ public class PlayfieldControll : MonoBehaviour
     [Header("ROUNDS")]
     public int totalRounds = 10;
     public int currentRound = 0;
+    public float timeOut = 30.0f;
+    public bool timedOut = false;
 
     [Header("PLAYERS")]
     PlayerManager players;
@@ -25,6 +27,23 @@ public class PlayfieldControll : MonoBehaviour
     public GameObject playerManager;
 
 
+
+    IEnumerator TimeOut(float seconds)
+    {
+        float waitTime = seconds;
+        bool playersRedied = false;
+        while(waitTime > 0)
+        {
+            Debug.Log(waitTime);
+            playersRedied = players.ArePlayersReady();
+            if (playersRedied) break;
+            waitTime -= 1.0f;
+            yield return new WaitForSeconds(1.0f);
+        }
+        if(!playersRedied)
+            timedOut = true;
+    }
+
     IEnumerator RoundsCoroutine(int rounds)
     {
 
@@ -32,7 +51,9 @@ public class PlayfieldControll : MonoBehaviour
         {
             StartNewRound();
 
-            while (players.ArePlayersReady() != true)
+            timedOut = false;
+            StartCoroutine(TimeOut(timeOut));
+            while (players.ArePlayersReady() != true && !timedOut)
                 yield return new WaitForSeconds(3);
 
             cardHolder.SetCardUI();
