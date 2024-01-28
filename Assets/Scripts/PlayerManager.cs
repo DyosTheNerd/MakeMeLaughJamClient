@@ -126,7 +126,7 @@ public class PlayerManager : MonoBehaviour
     public void PlayerPlayCard(int cardId, string playerId, int forRoundNumber)
     {
         // @andre
-        if (forRoundNumber != 0)
+        if (forRoundNumber != flowControl.currentRound)
         {
             return;
         }
