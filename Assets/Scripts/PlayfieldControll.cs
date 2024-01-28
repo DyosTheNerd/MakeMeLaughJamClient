@@ -62,7 +62,7 @@ public class PlayfieldControll : MonoBehaviour
 
             //TODO Add overlord animation wait time thing;
             yield return new WaitForSeconds(5);
-            //new WaitUntil( something something animation complete )
+                //new WaitUntil( something something animation complete )
         }
 
     }
@@ -89,12 +89,12 @@ public class PlayfieldControll : MonoBehaviour
         }
         else
         {
-            cardHolder.ClearUI();
             //Set Round
             currentRound = currentRound + 1;
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // TODO update round UI here.
+            cardHolder.SetCardUI();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
@@ -119,19 +119,19 @@ public class PlayfieldControll : MonoBehaviour
             Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
         }
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene("WinSomeLoseSomeScreen");
+        SceneManager.LoadScene(4);
     }
 
     private void WinEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene("WinScreen");
+        SceneManager.LoadScene(3);
     }
 
     private void LoseEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene("LoseScreen");
+        SceneManager.LoadScene(2);
     }
 
 }
