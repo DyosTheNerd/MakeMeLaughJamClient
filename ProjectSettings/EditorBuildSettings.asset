@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TutorialScreen.unity
+    guid: 3a3009f836fddb24db3c98ec461c2cc8
+  - enabled: 1
     path: Assets/WaitingRoom/WaitingRoomScene.unity
     guid: d7f100a68c43e874d8eddaf65027af3b
   - enabled: 1
@@ -20,7 +23,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinSomeLoseSomeScreen.unity
     guid: c77ef4c2608a4d24698a2f4b57959e6c
-  - enabled: 1
-    path: Assets/Scenes/TutorialScreen.unity
-    guid: 3a3009f836fddb24db3c98ec461c2cc8
   m_configObjects: {}

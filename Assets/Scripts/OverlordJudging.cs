@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class OverlordJudging : MonoBehaviour
 {
+    CardManager c_manager;
+    PlayerManager p_manager;
+
     public GameObject PlayerManager;
     public GameObject CardManager;
     public GameObject OverlordMoodPointer;
@@ -27,6 +30,8 @@ public class OverlordJudging : MonoBehaviour
 
     private void Start()
     {
+        c_manager = CardManager.GetComponent<CardManager>();
+        p_manager = PlayerManager.GetComponent<PlayerManager>();
         BuildlikedCardTypes();
     }
 
@@ -58,25 +63,28 @@ public class OverlordJudging : MonoBehaviour
 
     public void OverlordJugdgeNow()
     {
-        List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
+        List<int> playedCardList = p_manager.PlayedCards();
 
         //JUDGE
         for (int i = 0; i < playedCardList.Count; i++)
         {
             int currentCardId = playedCardList[i];
 
-            card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
+            card currentCard = c_manager.GetCardInfo(currentCardId);
 
-            foreach (string likedCard in likedCardTypes)
+            if (likedCardTypes.Contains(currentCard.typeOfCard))
             {
-                if (currentCard.typeOfCard == likedCard)
-                {
-                    //CHANGE IN MOOD        
-                    changeInMood = changeInMood + cardInfluenceOnMood;
-
-                    break;
-                }
+                    //Positive CHANGE IN MOOD        
+                    changeInMood += cardInfluenceOnMood  * currentCard.intensity;
             }
+            else
+            {   
+                //Negative CHANGE IN MOOD        
+                changeInMood -= cardInfluenceOnMood * currentCard.intensity;
+            }
+
+                
+            
         }
 
         rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
