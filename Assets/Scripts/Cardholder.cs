@@ -47,6 +47,29 @@ public class Cardholder : MonoBehaviour
 
     public void SetCardUI()
     {
+
+        for (int i = 0; i < 8; i++)
+        {
+            ListOfIntesity[i] = 0;
+            countOfIntesity[i] = 0;
+
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            cardUI = this.gameObject.transform.GetChild(i);
+
+            //Change Count on Card
+            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = countOfIntesity[i].ToString();
+
+            //Change Lights on Card
+            for (int countOfLights = 0; countOfLights < 10; countOfLights++)
+            {
+                cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = false;
+            }
+        }
+
+
         List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
 
         //Gettings Infos for playedCards and Store
@@ -70,11 +93,6 @@ public class Cardholder : MonoBehaviour
                     break;
                 }
             }
-
-
-            //Clean-up numberOfType-list
-            ListOfIntesity.Clear();
-            countOfIntesity.Clear();
 
         }
 
@@ -113,25 +131,6 @@ public class Cardholder : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             numberOfType[i] = 0;
-        }
-    }
-
-
-    public void ClearUI()
-    {
-        //HANDLING STATUS WHEN INFORMATIONS ARE Catched
-        for (int i = 0; i < 8; i++)
-        {
-            cardUI = this.gameObject.transform.GetChild(i);
-
-            //Change Count on Card
-            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0";
-
-            //Change Lights on Card
-            for (int countOfLights = 0; countOfLights < 10; countOfLights++)
-            {
-                cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = false;
-            }
         }
     }
 }
