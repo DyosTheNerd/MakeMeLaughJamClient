@@ -2194,8 +2194,8 @@ MonoBehaviour:
   OverlordMoodPointer: {fileID: 818724824}
   likedCardTypes: []
   overlordMood: 51
-  cardInfluenceOnMood: 10
-  numberOfLikedCardTypes: 2
+  cardInfluenceOnMood: 1
+  numberOfLikedCardTypes: 3
   Numbers: 
 --- !u!4 &1193423567
 Transform:
