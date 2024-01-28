@@ -13,6 +13,7 @@ public class Cardholder : MonoBehaviour
 
     public List<int> numberOfType;
     public List<string> typeOfCard;
+    public List<bool> ListOfIntesity;
     public List<bool> BoolsOfIntesity;
 
     private void Start()
@@ -30,42 +31,6 @@ public class Cardholder : MonoBehaviour
         }
 
         HandleStatus();
-    }
-
-
-    public void SetCardUI()
-    {
-            List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
-
-            for (int i = 0; i < playedCardList.Count; i++)
-            {
-                int currentCardId = playedCardList[i];
-
-                card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
-
-                numberOfType[i] = numberOfType[i] + 1;
-            }
-
-            for (int i = 0; i < 7; i++)
-            {
-                cardUI = this.gameObject.transform.GetChild(i);
-
-                //Change Count on Card
-                cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = numberOfType[i].ToString();
-
-                //Change Lights on Card by Bools
-                for (int countOfLights = 0; countOfLights < 10; i++)
-                {
-                    cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
-                }
-            }
-
-            //Clean-up numberOfType-list
-            typeOfCard.Clear();
-            foreach (string type in typeOfCard)
-            {
-                numberOfType.Add(0);
-            }
     }
 
     void HandleStatus()
@@ -86,4 +51,49 @@ public class Cardholder : MonoBehaviour
             }
         }
     }
+
+    public void SetCardUI()
+    {
+        List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
+
+        //Gettings Infos for playedCards and Store
+        for (int i = 0; i < playedCardList.Count; i++)
+        {
+            //CurrentCard
+            int currentCardId = playedCardList[i];
+            card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
+
+            //Increase COUNT OF CARDS
+            numberOfType[i] = numberOfType[i] + 1;
+
+            //Catch Intensity
+            //ListOfIntesity.Add(currentCard.intensity);
+
+        }
+
+        //HANDLING STATUS WHEN INFORMATIONS ARE Catched
+        for (int i = 0; i < 8; i++)
+        {
+            cardUI = this.gameObject.transform.GetChild(i);
+
+            //Change Count on Card
+            cardUI.GetChild(0).GetComponent<TextMeshProUGUI>().text = numberOfType[i].ToString();
+
+            //Change Lights on Card by Bools
+
+
+            for (int countOfLights = 0; countOfLights < 10; countOfLights++)
+            {
+                cardUI.GetChild(1).GetChild(countOfLights).GetComponent<Image>().enabled = true;
+            }
+        }
+
+        //Clean-up numberOfType-list
+        typeOfCard.Clear();
+        foreach (string type in typeOfCard)
+        {
+            numberOfType.Add(0);
+        }
+    }
+
 }

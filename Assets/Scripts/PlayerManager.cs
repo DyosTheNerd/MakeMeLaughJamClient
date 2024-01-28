@@ -20,13 +20,13 @@ public class PlayerManager : MonoBehaviour
     [Header("MANAGERS")]
     CardManager cardManager;
     InteractionManager interactionManager;
-
-
-
+    PlayfieldControll flowControl;
+   
     void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
         interactionManager = FindObjectOfType<InteractionManager>();
+        flowControl = FindObjectOfType<PlayfieldControll>();
 
         interactionManager.CardPlayed += PlayerPlayCard;
 
@@ -35,8 +35,6 @@ public class PlayerManager : MonoBehaviour
             AddPlayer(player.id, player.name);
         }
     }
-
-
 
     public Player GetPlayer(string id)
     {
@@ -124,7 +122,7 @@ public class PlayerManager : MonoBehaviour
     public void PlayerPlayCard(int cardId, string playerId, int forRoundNumber)
     {
         // @andre
-        if (forRoundNumber != 0)
+        if (forRoundNumber != flowControl.currentRound)
         {
             return;
         }
