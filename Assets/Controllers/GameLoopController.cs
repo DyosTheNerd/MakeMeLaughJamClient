@@ -4,8 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class PlayfieldControll : MonoBehaviour
+public class GameLoopController : MonoBehaviour
 {
+    public static GameLoopController instance;
+
+    // References
     OverlordJudging overlordJudging;
     Cardholder cardHolder;
 
@@ -28,13 +31,25 @@ public class PlayfieldControll : MonoBehaviour
 
 
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            GameLoopController.instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple GameLoopController instances detected.");
+        }
+    }
+
     IEnumerator TimeOut(float seconds)
     {
         float waitTime = seconds;
         bool playersRedied = false;
         while(waitTime > 0)
         {
-            Debug.Log(waitTime);
+            //Debug.Log(waitTime);
             playersRedied = players.ArePlayersReady();
             if (playersRedied) break;
             waitTime -= 1.0f;
@@ -71,11 +86,16 @@ public class PlayfieldControll : MonoBehaviour
     {
         overlordJudging = overlord.GetComponent<OverlordJudging>();
         cardHolder = cards.GetComponent<Cardholder>();
+        Debug.Log(cardHolder);
         players = playerManager.GetComponent<PlayerManager>();
 
         overlordJudging.SatisfiedOverlord += WinEnding;
         overlordJudging.DissatisfiedOverlord += LoseEnding;
 
+    }
+
+    public void StartGame()
+    {
         StartCoroutine(RoundsCoroutine(totalRounds));
     }
 
@@ -94,7 +114,7 @@ public class PlayfieldControll : MonoBehaviour
             counter.GetComponent<TextMeshProUGUI>().text = currentRound.ToString();
 
             // TODO update round UI here.
-            cardHolder.SetCardUI();
+            //cardHolder.SetCardUI();
 
             // Refill player hands according to _some_ rule
             players.RestockHands(currentRound);
@@ -119,19 +139,19 @@ public class PlayfieldControll : MonoBehaviour
             Debug.Log("That was entertaining. I think I'll let the earth live....for now.");
         }
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("WinSomeLoseSomeScreen");
     }
 
     private void WinEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("WinScreen");
     }
 
     private void LoseEnding()
     {
         // TODO add a coroutine to delay the scene transition
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("LoseScreen");
     }
 
 }

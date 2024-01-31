@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Cardholder : MonoBehaviour
 {
-    public GameObject PlayerManager;
-    public GameObject CardManager;
+    //public GameObject PlayerManager;
+    //public GameObject CardManager;
 
     private Transform cardUI;
 
@@ -70,14 +70,14 @@ public class Cardholder : MonoBehaviour
         }
 
 
-        List<int> playedCardList = PlayerManager.GetComponent<PlayerManager>().PlayedCards();
+        List<int> playedCardList = PlayerManager.instance.PlayedCards();
 
         //Gettings Infos for playedCards and Store
         for (int i = 0; i < playedCardList.Count; i++)
         {
             //CurrentCard
             int currentCardId = playedCardList[i];
-            card currentCard = CardManager.GetComponent<CardManager>().GetCardInfo(currentCardId);
+            card currentCard = CardManager.instance.GetCardInfo(currentCardId);
 
             //Increase COUNT OF CARDS
             numberOfType[i] = numberOfType[i] + 1;
@@ -85,7 +85,7 @@ public class Cardholder : MonoBehaviour
 
             for (int placeInList = 0; placeInList < 8; placeInList++)
             {
-                if (currentCard.typeOfCard == CardManager.GetComponent<CardManager>().cardTypes[placeInList])
+                if (currentCard.typeOfCard == CardManager.instance.cardTypes[placeInList])
                 {
                     //Ad Intensity tot Intensity of Card (total in between)
                     ListOfIntesity[placeInList] = ListOfIntesity[placeInList] + currentCard.intensity;

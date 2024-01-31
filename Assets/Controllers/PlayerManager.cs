@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager instance;
 
     [Header("PLAYER PARAMETERS")]
     public int HandSize = 5;
@@ -20,13 +21,26 @@ public class PlayerManager : MonoBehaviour
     [Header("MANAGERS")]
     CardManager cardManager;
     InteractionManager interactionManager;
-    PlayfieldControll flowControl;
-   
+    GameLoopController flowControl;
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            PlayerManager.instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple PlayerManager instances detected.");
+        }
+    }
+
     void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
-        interactionManager = FindObjectOfType<InteractionManager>();
-        flowControl = FindObjectOfType<PlayfieldControll>();
+        interactionManager = InteractionManager.instance;
+        flowControl = GameLoopController.instance;
 
         interactionManager.CardPlayed += PlayerPlayCard;
 
@@ -78,7 +92,10 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Filling hands");
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].AddCards(cardManager.DrawCards(HandSize - players[i].cardsInHand.Count));
+            List<int> dealtCards = cardManager.DrawCards(HandSize - players[i].cardsInHand.Count);
+
+            Debug.Log("Player " + players[i].name + "was dealt cards " + string.Join("-", dealtCards));
+            players[i].AddCards(dealtCards);
         }
     }
 
@@ -135,6 +152,8 @@ public class PlayerManager : MonoBehaviour
         player.PlayCard(cardId);
 
         playedCards.Add(cardId);
+
+        Debug.Log("Player " + player.name + " played card " + cardId  + " " + cardManager.GetCardInfo(cardId).typeOfCard);
 
     }
     

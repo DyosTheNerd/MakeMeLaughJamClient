@@ -21,6 +21,18 @@ public class CardManager : MonoBehaviour
     public List<card> cardDictionary;
 
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            CardManager.instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple CardManager instances detected.");
+        }
+    }
+
     // This logic can be adjusted to be non uniform.
     public void GenerateCardDictionary()
     {
@@ -36,7 +48,6 @@ public class CardManager : MonoBehaviour
 
     public card GetCardInfo(int id)
     {
-        Debug.Log("Card ID : " + id);
         return cardDictionary[id];
     }
 
