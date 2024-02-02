@@ -9,6 +9,7 @@ public class UIAnimationController : MonoBehaviour
     [Header("Drag and Drop Parameters")]
     public PlayedCardCountAnimator playedCardCountAnimator;
     public PlayedCardIntensityAnimator playedCardIntensityAnimator;
+    public GameLoopMessaging loopMessager;
 
     [Header("UI Objects")]
     public GameObject Alien;
@@ -66,8 +67,10 @@ public class UIAnimationController : MonoBehaviour
     {
         AnimationsPlaying++;
         playedCardCountAnimator.AnimationEnabled = true;
+        loopMessager.EnablePlayersVotingMessage();
         yield return new WaitUntil(() => stopCondition());
         playedCardCountAnimator.AnimationEnabled = false;
+        loopMessager.DisablePlayersVotingMessage();
         AnimationsPlaying--;
     }
 

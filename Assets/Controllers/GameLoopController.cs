@@ -19,7 +19,7 @@ public class GameLoopController : MonoBehaviour
     public int currentRound = 0;
     public float timeOut = 30.0f;
     public bool timedOut = false;
-
+    public float currentTimeout = 0.0f;
     [Header("PLAYERS")]
     PlayerManager players;
 
@@ -45,14 +45,14 @@ public class GameLoopController : MonoBehaviour
 
     IEnumerator TimeOut(float seconds)
     {
-        float waitTime = seconds;
+        currentTimeout = seconds;
         bool playersRedied = false;
-        while(waitTime > 0)
+        while(currentTimeout > 0)
         {
             //Debug.Log(waitTime);
             playersRedied = players.ArePlayersReady();
             if (playersRedied) break;
-            waitTime -= 1.0f;
+            currentTimeout -= 1.0f;
             yield return new WaitForSeconds(1.0f);
         }
         if(!playersRedied)

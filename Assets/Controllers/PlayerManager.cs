@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     private Dictionary<string, Player> id2Player = new Dictionary<string, Player>();
     public List<string> waitingForPlayers = new List<string>();
     public List<int> playedCards = new List<int>();
+    public Dictionary<string, int> playedCardOfType = new Dictionary<string, int>();
 
     [Header("MANAGERS")]
     CardManager cardManager;
@@ -48,6 +49,18 @@ public class PlayerManager : MonoBehaviour
         {
             AddPlayer(player.id, player.name);
         }
+
+        foreach (var type in CardManager.instance.cardTypes)
+            playedCardOfType[type] = 0;
+    }
+
+    public int NumberOfVotedPlayers()
+    {
+        return players.Count - waitingForPlayers.Count;
+    }
+    public int NumberOfTotalPlayers()
+    {
+        return players.Count;
     }
 
     public Player GetPlayer(string id)
@@ -125,6 +138,11 @@ public class PlayerManager : MonoBehaviour
     {
         waitingForPlayers.Clear();
         playedCards.Clear();
+
+        foreach(var type in CardManager.instance.cardTypes)
+            playedCardOfType[type] = 0;
+
+
         for (int i = 0; i < players.Count; i++)
         {
             waitingForPlayers.Add(players[i].id);
@@ -152,6 +170,9 @@ public class PlayerManager : MonoBehaviour
         player.PlayCard(cardId);
 
         playedCards.Add(cardId);
+
+        string cardType = CardManager.instance.GetCardInfo(cardId).typeOfCard;
+        playedCardOfType[cardType]++;
 
         Debug.Log("Player " + player.name + " played card " + cardId  + " " + cardManager.GetCardInfo(cardId).typeOfCard);
 

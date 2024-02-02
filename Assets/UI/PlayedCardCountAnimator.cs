@@ -51,6 +51,7 @@ public class PlayedCardCountAnimator : MonoBehaviour
             int cardTypeId = CardManager.instance.GetCardTypeID(cardType);
 
             sizeRatios[cardTypeId] = maximumFontIncreaseRatio;
+            cardCountTexts[cardTypeId].text = PlayerManager.instance.playedCardOfType[cardType].ToString();
         }
     }
 
