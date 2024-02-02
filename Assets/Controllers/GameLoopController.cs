@@ -59,25 +59,48 @@ public class GameLoopController : MonoBehaviour
             timedOut = true;
     }
 
+
+    /// <summary>
+    /// The rounds are controlled by the gamelogic steps (StartNewRound, OverlordJudgeNow)
+    /// 
+    /// 
+    /// </summary>
+    /// <param name="rounds"></param>
+    /// <returns></returns>
     IEnumerator RoundsCoroutine(int rounds)
     {
 
         for (int i = 0; i < rounds; i++)
         {
+            //Logic for player setup and choice.
             StartNewRound();
 
             timedOut = false;
             StartCoroutine(TimeOut(timeOut));
-            while (players.ArePlayersReady() != true && !timedOut)
-                yield return new WaitForSeconds(3);
 
-            cardHolder.SetCardUI();
+            UIAnimationController.AnimationStopCondition stopCondition = () => players.ArePlayersReady() == true || timedOut;
 
+            UIAnimationController.instance.EnablePlayersVotingAndTimeoutMessage(stopCondition);
+            UIAnimationController.instance.EnablePlayerVotingAnimation(stopCondition);
+            UIAnimationController.instance.EnableVoteEvaluationAnimation(stopCondition);
+
+            //Waits until all players finished voting
+            yield return new WaitUntil(() => players.ArePlayersReady() == true || timedOut);
+
+            
+            //Logic for OverlordJudgment
             overlordJudging.OverlordJugdgeNow();
 
-            //TODO Add overlord animation wait time thing;
-            yield return new WaitForSeconds(5);
-                //new WaitUntil( something something animation complete )
+            //cardHolder.SetCardUI();
+            UIAnimationController.instance.PlayOverlordJudgmentAnimation();
+            yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
+
+            UIAnimationController.instance.PlayOverlordJudgmentResultAnimation();
+            yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
+
+            UIAnimationController.instance.PlayPrepareForNextRoundAnimation();
+            yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
+
         }
 
     }

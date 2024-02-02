@@ -7,8 +7,6 @@ public class OverlordJudging : MonoBehaviour
     CardManager c_manager;
     PlayerManager p_manager;
 
-    public GameObject PlayerManager;
-    public GameObject CardManager;
     public GameObject OverlordMoodPointer;
     float pointerMovementSpeed = 1.0f;
 
@@ -30,14 +28,14 @@ public class OverlordJudging : MonoBehaviour
 
     private void Start()
     {
-        c_manager = CardManager.GetComponent<CardManager>();
-        p_manager = PlayerManager.GetComponent<PlayerManager>();
+        c_manager = CardManager.instance;
+        p_manager = PlayerManager.instance;
         BuildlikedCardTypes();
     }
 
     private void BuildlikedCardTypes()
     {
-        List<string> cardTypes = CardManager.GetComponent<CardManager>().cardTypes;
+        List<string> cardTypes = c_manager.cardTypes;
 
         //be save with each number only once
         for (int random = 0; random < cardTypes.Count; random++)
@@ -112,12 +110,10 @@ public class OverlordJudging : MonoBehaviour
 
     IEnumerator LerpFromTo(Vector2 currentPosition, Vector2 newPosition, float duration)
     {
-        for (
-            float t = 0f; t < duration; t += pointerMovementSpeed * Time.deltaTime
-        )
+        for (float t = 0f; t < duration; t += pointerMovementSpeed * Time.deltaTime)
         {
             rectTransform.anchoredPosition = Vector2.Lerp(currentPosition, newPosition, t / duration);
-            yield return 0;
+            yield return null;
         }
     }
 }

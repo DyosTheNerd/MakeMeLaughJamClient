@@ -94,7 +94,7 @@ public class PlayerManager : MonoBehaviour
         {
             List<int> dealtCards = cardManager.DrawCards(HandSize - players[i].cardsInHand.Count);
 
-            Debug.Log("Player " + players[i].name + "was dealt cards " + string.Join("-", dealtCards));
+            Debug.Log("Player " + players[i].name + " was dealt cards " + string.Join("-", dealtCards));
             players[i].AddCards(dealtCards);
         }
     }
