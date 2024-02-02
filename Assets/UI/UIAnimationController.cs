@@ -27,11 +27,6 @@ public class UIAnimationController : MonoBehaviour
 
     public delegate bool AnimationStopCondition();
 
-    public bool AreAnimationsPlaying()
-    {
-        return AnimationsPlaying != 0;
-    }
-
     void Awake()
     {
         if (instance == null)
@@ -44,9 +39,43 @@ public class UIAnimationController : MonoBehaviour
         }
     }
 
-    public void PlayOverlordJudgmentAnimation()
+    private void Start()
+    {
+        InteractionManager.instance.CardPlayed += PlayerPlayedCardAnimation;
+    }
+
+    void PlayerPlayedCardAnimation(int cardId, string playerId, int roundNumber)
     {
 
+    }
+
+
+    public bool AreAnimationsPlaying()
+    {
+        return AnimationsPlaying != 0;
+    }
+
+    IEnumerator PlayOverlordJudgmentAnimationRoutine()
+    {
+        AnimationsPlaying++;
+
+        yield return null;
+
+        AnimationsPlaying--;
+    }
+
+    public void PlayOverlordJudgmentAnimation()
+    {
+        StartCoroutine(PlayOverlordJudgmentAnimationRoutine());
+    }
+
+    IEnumerator EnablePlayerVotingAnimationRoutine(AnimationStopCondition stopCondition)
+    {
+        AnimationsPlaying++;
+
+        yield return new WaitUntil(() => stopCondition());
+
+        AnimationsPlaying--;
     }
 
     public void EnablePlayerVotingAnimation(AnimationStopCondition stopCondition)
@@ -54,14 +83,39 @@ public class UIAnimationController : MonoBehaviour
 
     }
 
+    IEnumerator EnableVoteEvaluationAnimationRoutine(AnimationStopCondition stopCondition)
+    {
+        AnimationsPlaying++;
+
+        yield return new WaitUntil(() => stopCondition());
+
+        AnimationsPlaying--;
+    }
     public void EnableVoteEvaluationAnimation(AnimationStopCondition stopCondition) 
     { 
     
     }
 
+    IEnumerator EnablePlayersVotingAndTimeoutMessageRoutine(AnimationStopCondition stopCondition)
+    {
+        AnimationsPlaying++;
+
+        yield return new WaitUntil(() => stopCondition());
+
+        AnimationsPlaying--;
+    }
     public void EnablePlayersVotingAndTimeoutMessage(AnimationStopCondition stopCondition)
     {
 
+    }
+
+    IEnumerator PlayOverlordJudgmentResultAnimationRoutine()
+    {
+        AnimationsPlaying++;
+
+        yield return new WaitForSeconds(10);
+
+        AnimationsPlaying--;
     }
 
     public void PlayOverlordJudgmentResultAnimation()
@@ -69,6 +123,14 @@ public class UIAnimationController : MonoBehaviour
 
     }
 
+    IEnumerator PlayPrepareForNextRoundAnimationRoutine()
+    {
+        AnimationsPlaying++;
+
+        yield return new WaitForSeconds(10);
+
+        AnimationsPlaying--;
+    }
     public void PlayPrepareForNextRoundAnimation()
     {
 

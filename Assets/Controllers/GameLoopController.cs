@@ -78,14 +78,14 @@ public class GameLoopController : MonoBehaviour
             timedOut = false;
             StartCoroutine(TimeOut(timeOut));
 
-            UIAnimationController.AnimationStopCondition stopCondition = () => players.ArePlayersReady() == true || timedOut;
+            bool stopVotingCondition() => players.ArePlayersReady() == true || timedOut;
 
-            UIAnimationController.instance.EnablePlayersVotingAndTimeoutMessage(stopCondition);
-            UIAnimationController.instance.EnablePlayerVotingAnimation(stopCondition);
-            UIAnimationController.instance.EnableVoteEvaluationAnimation(stopCondition);
+            UIAnimationController.instance.EnablePlayersVotingAndTimeoutMessage(stopVotingCondition);
+            UIAnimationController.instance.EnablePlayerVotingAnimation(stopVotingCondition);
+            UIAnimationController.instance.EnableVoteEvaluationAnimation(stopVotingCondition);
 
             //Waits until all players finished voting
-            yield return new WaitUntil(() => players.ArePlayersReady() == true || timedOut);
+            yield return new WaitUntil(stopVotingCondition);
 
             
             //Logic for OverlordJudgment
