@@ -9,6 +9,7 @@ public class CardManager : MonoBehaviour
 
     [Header("Parameters")]
     public List<string> cardTypes;
+    public Dictionary<string, int> cardType2CardTypeID = new Dictionary<string, int>();
     // How many cards to populate the card dictionary with.
     // Currently using one for each type, intensity value inside the interval
     // (ratingInterval.y - ratingInterval.x) * cardTypes.Count() = different card templates.
@@ -34,7 +35,7 @@ public class CardManager : MonoBehaviour
     }
 
     // This logic can be adjusted to be non uniform.
-    public void GenerateCardDictionary()
+    public void InitializeCardManager()
     {
         for (int i = 0; i < cardTypes.Count; i++)
         {
@@ -44,6 +45,16 @@ public class CardManager : MonoBehaviour
                 cardDictionary.Add(new card(s, cardTypes[i], ratingInterval.x + j));
             }
         }
+
+        for (int i = 0; i < cardTypes.Count; i++)
+        {
+            cardType2CardTypeID[cardTypes[i]] = i;
+        }
+    }
+
+    public int GetCardTypeID(string cardType)
+    {
+        return cardType2CardTypeID[cardType];
     }
 
     public card GetCardInfo(int id)
@@ -68,7 +79,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateCardDictionary();
+        InitializeCardManager();
         instance = this;
     }
 

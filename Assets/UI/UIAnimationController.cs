@@ -6,6 +6,10 @@ public class UIAnimationController : MonoBehaviour
 {
     public static UIAnimationController instance;
 
+    [Header("Drag and Drop Parameters")]
+    public PlayedCardCountAnimator playedCardCountAnimator;
+    public PlayedCardIntensityAnimator playedCardIntensityAnimator;
+
     [Header("UI Objects")]
     public GameObject Alien;
     public GameObject Cards;
@@ -39,17 +43,6 @@ public class UIAnimationController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        InteractionManager.instance.CardPlayed += PlayerPlayedCardAnimation;
-    }
-
-    void PlayerPlayedCardAnimation(int cardId, string playerId, int roundNumber)
-    {
-
-    }
-
-
     public bool AreAnimationsPlaying()
     {
         return AnimationsPlaying != 0;
@@ -72,15 +65,15 @@ public class UIAnimationController : MonoBehaviour
     IEnumerator EnablePlayerVotingAnimationRoutine(AnimationStopCondition stopCondition)
     {
         AnimationsPlaying++;
-
+        playedCardCountAnimator.AnimationEnabled = true;
         yield return new WaitUntil(() => stopCondition());
-
+        playedCardCountAnimator.AnimationEnabled = false;
         AnimationsPlaying--;
     }
 
     public void EnablePlayerVotingAnimation(AnimationStopCondition stopCondition)
     {
-
+        StartCoroutine(EnablePlayerVotingAnimationRoutine(stopCondition));
     }
 
     IEnumerator EnableVoteEvaluationAnimationRoutine(AnimationStopCondition stopCondition)
