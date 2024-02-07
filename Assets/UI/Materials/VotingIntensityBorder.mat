@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VotingIntensity
-  m_Shader: {fileID: 4800000, guid: bf0c04b5da80efa4798e11efb0c824cf, type: 3}
+  m_Name: VotingIntensityBorder
+  m_Shader: {fileID: 4800000, guid: 8d408dd4d144fce41a120380a1b091b0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

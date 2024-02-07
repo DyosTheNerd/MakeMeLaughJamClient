@@ -12,6 +12,8 @@ public class GameLoopMessaging : MonoBehaviour
 
 
     private bool playersVoting = false;
+    private bool overlordJudging = false;
+
 
     IEnumerator UpdatePlayersVotingText()
     {

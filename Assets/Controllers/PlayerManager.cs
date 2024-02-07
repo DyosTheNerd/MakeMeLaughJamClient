@@ -18,6 +18,8 @@ public class PlayerManager : MonoBehaviour
     public List<string> waitingForPlayers = new List<string>();
     public List<int> playedCards = new List<int>();
     public Dictionary<string, int> playedCardOfType = new Dictionary<string, int>();
+    List<float> playedCardsRatio = new List<float>();
+
 
     [Header("MANAGERS")]
     CardManager cardManager;
@@ -51,7 +53,39 @@ public class PlayerManager : MonoBehaviour
         }
 
         foreach (var type in CardManager.instance.cardTypes)
+        {
             playedCardOfType[type] = 0;
+            playedCardsRatio.Add(0.0f);
+        }
+    }
+
+
+
+    private void ComputePlayedCardRatios(bool normalized)
+    {
+        int types = CardManager.instance.cardTypes.Count;
+        playedCardsRatio.Clear();
+        float total = 0;
+        float max = 0;
+        for (int i = 0; i < types; i++)
+        {
+            playedCardsRatio.Add(playedCardOfType[CardManager.instance.cardTypes[i]]);
+            total += playedCardsRatio[i];
+            max = playedCardsRatio[i] > max ? playedCardsRatio[i] : max;
+        }
+
+        for (int i = 0; i < types; i++)
+        {
+            if (normalized)
+                playedCardsRatio[i] /= max;
+            else
+                playedCardsRatio[i] /= total;
+        }
+    }
+
+    public List<float> PlayedCardRatios()
+    {
+        return playedCardsRatio;
     }
 
     public int NumberOfVotedPlayers()
@@ -77,12 +111,12 @@ public class PlayerManager : MonoBehaviour
         //// for the first 
         //if(roundNumber == 1)
         //{
-            FillHands();
-            for (int i = 0; i < players.Count; i++)
-            {
-                interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
-            }
-            UnreadyPlayers();
+        FillHands();
+        for (int i = 0; i < players.Count; i++)
+        {
+            interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
+        }
+        UnreadyPlayers();
         //    return;
         //}
 
@@ -94,7 +128,7 @@ public class PlayerManager : MonoBehaviour
 
         //for (int i = 0; i < players.Count; i++)
         //{
-            
+
         //    interactionManager.UpdatePlayerHand(players[i].id, cardManager.ConvertToInteraction(players[i].ShowHand()).ToArray(), roundNumber);
         //}
         //UnreadyPlayers();
@@ -139,7 +173,7 @@ public class PlayerManager : MonoBehaviour
         waitingForPlayers.Clear();
         playedCards.Clear();
 
-        foreach(var type in CardManager.instance.cardTypes)
+        foreach (var type in CardManager.instance.cardTypes)
             playedCardOfType[type] = 0;
 
 
@@ -174,10 +208,10 @@ public class PlayerManager : MonoBehaviour
         string cardType = CardManager.instance.GetCardInfo(cardId).typeOfCard;
         playedCardOfType[cardType]++;
 
-        Debug.Log("Player " + player.name + " played card " + cardId  + " " + cardManager.GetCardInfo(cardId).typeOfCard);
-
+        Debug.Log("Player " + player.name + " played card " + cardId + " " + cardManager.GetCardInfo(cardId).typeOfCard);
+        ComputePlayedCardRatios(true);
     }
-    
+
 
     //Only valid if players are ready.
     public List<int> PlayedCards()
@@ -233,7 +267,7 @@ public class Player
     {
         return cardsInHand.AsReadOnly();
     }
-    
+
 
 
 }

@@ -1,10 +1,9 @@
-Shader "Unlit/VotingIntensity"
+Shader "Unlit/VotingIntensityBorder"
 {
     Properties
     {
         [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
         _Color("Tint", Color) = (1,1,1,1)
-        _Color2("Tint2", Color) = (1,1,1,1)
 
         _StencilComp("Stencil Comparison", Float) = 8
         _Stencil("Stencil ID", Float) = 0
@@ -85,7 +84,6 @@ Shader "Unlit/VotingIntensity"
 
                 sampler2D _MainTex;
                 fixed4 _Color;
-                fixed4 _Color2;
                 fixed4 _TextureSampleAdd;
                 float4 _ClipRect;
                 float4 _MainTex_ST;
@@ -128,17 +126,15 @@ Shader "Unlit/VotingIntensity"
                 fixed4 frag(v2f IN) : SV_Target
                 {
 
-                    float len = length(IN.worldPosition.xy - _CentralPosition.xy) / _Scale;
-                    len -= _Time.x * _TimeScale;
-                    float freq = 1.0/ _Frequency;
-                    float period = _Frequency;
-                    len = fmod(len, freq) * period;
-                    len = abs(len);
-
-                    len = lerp(0, smoothstep(0.5 - _PulseWidth, 0.5, 1.0-len), len > 0.5);
+                    //float len = length(IN.worldPosition.xy - _CentralPosition.xy) / _Scale;
+                    //len -= _Time.x * _TimeScale;
+                    //float freq = 1.0/ _Frequency;
+                    //float period = _Frequency;
+                    //len = fmod(len, freq) * period;
+                    //len = abs(len);
 
                     //return color;
-                    return float4(lerp(_Color, _Color2,1.0-len).xyz, 1.0);
+                    return _Color;
                 }
             ENDCG
             }
