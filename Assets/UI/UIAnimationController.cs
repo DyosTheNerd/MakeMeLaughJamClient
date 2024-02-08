@@ -8,7 +8,7 @@ public class UIAnimationController : MonoBehaviour
 
     [Header("Drag and Drop Parameters")]
     public PlayedCardCountAnimator playedCardCountAnimator;
-    public PlayedCardIntensityAnimator playedCardIntensityAnimator;
+    //public PlayedCardIntensityAnimatorSDF playedCardIntensityAnimator;
     public GameLoopMessaging loopMessager;
 
     [Header("UI Objects")]

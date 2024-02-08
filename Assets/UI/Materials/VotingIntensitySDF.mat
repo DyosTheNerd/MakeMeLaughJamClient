@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VotingIntensityBorder
-  m_Shader: {fileID: 4800000, guid: 8d408dd4d144fce41a120380a1b091b0, type: 3}
+  m_Name: VotingIntensitySDF
+  m_Shader: {fileID: 4800000, guid: bf0c04b5da80efa4798e11efb0c824cf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -71,12 +71,12 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _MinimumScale: 0.24
+    - _MinimumScale: 0.2
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PulseWidth: 0.5
-    - _Scale: 78
+    - _Scale: 75
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -92,7 +92,7 @@ Material:
     - v: 18.57
     m_Colors:
     - _CentralPosition: {r: -220.4, g: -95, b: 0, a: 0}
-    - _Color: {r: 1, g: 0.53113264, b: 0, a: 1}
-    - _Color2: {r: 1, g: 0.5808056, b: 0, a: 1}
+    - _Color: {r: 0.0627451, g: 0.57254905, b: 0.7137255, a: 1}
+    - _Color2: {r: 0, g: 0.5254902, b: 0.49411768, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
