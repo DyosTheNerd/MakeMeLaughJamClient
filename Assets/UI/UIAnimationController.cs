@@ -8,6 +8,7 @@ public class UIAnimationController : MonoBehaviour
 
     [Header("Drag and Drop Parameters")]
     public PlayedCardCountAnimator playedCardCountAnimator;
+    public OverlordJudgmentAnimator overlordJudgingAnimator;
     //public PlayedCardIntensityAnimatorSDF playedCardIntensityAnimator;
     public GameLoopMessaging loopMessager;
 
@@ -53,7 +54,8 @@ public class UIAnimationController : MonoBehaviour
     {
         AnimationsPlaying++;
 
-        yield return null;
+        overlordJudgingAnimator.PlayOverLordJudgeAnimation();
+        yield return new WaitWhile(overlordJudgingAnimator.IsPlaying);
 
         AnimationsPlaying--;
     }

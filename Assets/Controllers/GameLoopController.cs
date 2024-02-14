@@ -91,10 +91,10 @@ public class GameLoopController : MonoBehaviour
             //Logic for OverlordJudgment
             overlordJudging.OverlordJugdgeNow();
 
-            //cardHolder.SetCardUI();
             UIAnimationController.instance.PlayOverlordJudgmentAnimation();
             yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
 
+            overlordJudging.EvaluateMood();
             UIAnimationController.instance.PlayOverlordJudgmentResultAnimation();
             yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
 

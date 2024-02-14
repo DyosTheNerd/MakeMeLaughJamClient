@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class OverlordJudging : MonoBehaviour
 {
+    public static OverlordJudging instance;
     CardManager c_manager;
     PlayerManager p_manager;
-
-    public GameObject OverlordMoodPointer;
-    float pointerMovementSpeed = 1.0f;
 
     [Header("LIKED TYPE OF CARDS")]
     public List<string> likedCardTypes = new List<string>();
     public int overlordMood = 51;
+    public int oldOverlordMood = 51;
     public int cardInfluenceOnMood = 1;
     public int numberOfLikedCardTypes = 2;
-    private float changeInMood;
+
     public List<int> Numbers;
-    RectTransform rectTransform;
 
     public delegate void OnOverlordSatisfied();
     public event OnOverlordSatisfied SatisfiedOverlord;
@@ -25,6 +23,18 @@ public class OverlordJudging : MonoBehaviour
     public delegate void OnOverlordDissatisfied();
     public event OnOverlordDissatisfied DissatisfiedOverlord;
 
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            OverlordJudging.instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple OverlordJudging instances detected.");
+        }
+    }
 
     private void Start()
     {
@@ -61,6 +71,8 @@ public class OverlordJudging : MonoBehaviour
 
     public void OverlordJugdgeNow()
     {
+
+        float changeInMood = 0;
         List<int> playedCardList = p_manager.PlayedCards();
 
         //JUDGE
@@ -85,35 +97,22 @@ public class OverlordJudging : MonoBehaviour
             
         }
 
-        rectTransform = OverlordMoodPointer.GetComponent<RectTransform>();
-        Vector2 newPosition = new Vector2(rectTransform.anchoredPosition.x + changeInMood, rectTransform.anchoredPosition.y);
+        oldOverlordMood = overlordMood;
+        overlordMood += (int)changeInMood;
+    }
 
-        Vector2 currentPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
-
-        StartCoroutine(LerpFromTo(currentPosition, newPosition, 5f));
-
-        //SHOW REACTION
-        if (overlordMood < 0)
+    public void EvaluateMood()
+    {        
+        if (overlordMood <= 0)
         {
             Debug.Log("ANGER!!!! - YOU ALL WILL DIE!");
             DissatisfiedOverlord?.Invoke();
         }
-        else if (overlordMood > 100)
+        else if (overlordMood >= 100)
         {
             Debug.Log("LAUGHTER!!! -  YOU ALL WIN!!!");
             SatisfiedOverlord?.Invoke();
         }
-
-        //Reset
-        changeInMood = 0;
     }
 
-    IEnumerator LerpFromTo(Vector2 currentPosition, Vector2 newPosition, float duration)
-    {
-        for (float t = 0f; t < duration; t += pointerMovementSpeed * Time.deltaTime)
-        {
-            rectTransform.anchoredPosition = Vector2.Lerp(currentPosition, newPosition, t / duration);
-            yield return null;
-        }
-    }
 }
