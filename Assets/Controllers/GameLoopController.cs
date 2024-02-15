@@ -82,7 +82,7 @@ public class GameLoopController : MonoBehaviour
 
             UIAnimationController.instance.EnablePlayersVotingAndTimeoutMessage(stopVotingCondition);
             UIAnimationController.instance.EnablePlayerVotingAnimation(stopVotingCondition);
-            UIAnimationController.instance.EnableVoteEvaluationAnimation(stopVotingCondition);
+            //UIAnimationController.instance.EnableVoteEvaluationAnimation(stopVotingCondition);
 
             //Waits until all players finished voting
             yield return new WaitUntil(stopVotingCondition);

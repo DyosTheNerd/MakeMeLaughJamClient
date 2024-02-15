@@ -59,7 +59,6 @@ public class UIAnimationController : MonoBehaviour
 
         AnimationsPlaying--;
     }
-
     public void PlayOverlordJudgmentAnimation()
     {
         StartCoroutine(PlayOverlordJudgmentAnimationRoutine());
@@ -68,14 +67,11 @@ public class UIAnimationController : MonoBehaviour
     IEnumerator EnablePlayerVotingAnimationRoutine(AnimationStopCondition stopCondition)
     {
         AnimationsPlaying++;
-        playedCardCountAnimator.AnimationEnabled = true;
-        loopMessager.EnablePlayersVotingMessage();
+
         yield return new WaitUntil(() => stopCondition());
-        playedCardCountAnimator.AnimationEnabled = false;
-        loopMessager.DisablePlayersVotingMessage();
+
         AnimationsPlaying--;
     }
-
     public void EnablePlayerVotingAnimation(AnimationStopCondition stopCondition)
     {
         StartCoroutine(EnablePlayerVotingAnimationRoutine(stopCondition));
@@ -90,21 +86,23 @@ public class UIAnimationController : MonoBehaviour
         AnimationsPlaying--;
     }
     public void EnableVoteEvaluationAnimation(AnimationStopCondition stopCondition) 
-    { 
-    
+    {
+        StartCoroutine(EnableVoteEvaluationAnimationRoutine(stopCondition));
     }
 
     IEnumerator EnablePlayersVotingAndTimeoutMessageRoutine(AnimationStopCondition stopCondition)
     {
         AnimationsPlaying++;
-
+        playedCardCountAnimator.AnimationEnabled = true;
+        loopMessager.EnablePlayersVotingMessage();
         yield return new WaitUntil(() => stopCondition());
-
+        playedCardCountAnimator.AnimationEnabled = false;
+        loopMessager.DisablePlayersVotingMessage();
         AnimationsPlaying--;
     }
     public void EnablePlayersVotingAndTimeoutMessage(AnimationStopCondition stopCondition)
     {
-
+        StartCoroutine(EnablePlayersVotingAndTimeoutMessageRoutine(stopCondition));
     }
 
     IEnumerator PlayOverlordJudgmentResultAnimationRoutine()
@@ -115,22 +113,24 @@ public class UIAnimationController : MonoBehaviour
 
         AnimationsPlaying--;
     }
-
     public void PlayOverlordJudgmentResultAnimation()
     {
-
+        StartCoroutine(PlayOverlordJudgmentResultAnimationRoutine());
     }
 
     IEnumerator PlayPrepareForNextRoundAnimationRoutine()
     {
         AnimationsPlaying++;
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
 
         AnimationsPlaying--;
     }
     public void PlayPrepareForNextRoundAnimation()
     {
+
+        StartCoroutine(PlayPrepareForNextRoundAnimationRoutine());
+
 
     }
 

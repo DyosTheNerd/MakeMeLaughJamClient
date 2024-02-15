@@ -8,7 +8,12 @@ public class OverlordJudgmentAnimator : MonoBehaviour
     
     [Header("Objects and Positions")]
     public RectTransform pointer;
+    public RectTransform shadowPointer;
     public RectTransform backdrop;
+    public Material ShadowPointerMaterial;
+    public Material PointerMaterial;
+
+
 
     public Vector3 badMoodPosition;
     public Vector3 goodMoodPosition;
@@ -28,6 +33,15 @@ public class OverlordJudgmentAnimator : MonoBehaviour
         return isPlaying;
     }
 
+    IEnumerator FadeShadowPointer(float duration)
+    {
+
+
+        yield return new WaitForSeconds(duration);
+
+        shadowPointer.gameObject.SetActive(false);
+    }
+
     IEnumerator JudgingCoroutine(float duration)
     {
         isPlaying = true;
@@ -35,12 +49,19 @@ public class OverlordJudgmentAnimator : MonoBehaviour
         var randomEasingFunction = EasingFunctions.RandomFunction();
         float t = 0.0f;
 
-        while(t < duration)
+        shadowPointer.gameObject.SetActive(true);
+
+        SetPointerPosition(0, shadowPointer);
+
+        while (t < duration)
         {
-            SetPointerPosition(randomEasingFunction(t/ duration));
+            SetPointerPosition(randomEasingFunction(t/ duration), pointer);
             t += Time.deltaTime;
             yield return null;
         }
+
+        StartCoroutine(FadeShadowPointer(2));
+
         isPlaying = false;
     }
 
@@ -53,13 +74,13 @@ public class OverlordJudgmentAnimator : MonoBehaviour
         StartCoroutine(JudgingCoroutine(5.0f));
     }
 
-    void SetPointerPosition(float t)
+    void SetPointerPosition(float t, RectTransform target)
     {
 
         float mood_t = Mathf.Lerp(oldOverlordMood, overlordMood, t);
         mood_t = Mathf.Clamp01(mood_t);
 
-        pointer.position = (rectTransform.position + new Vector3(0, -rectTransform.rect.height / 8, 0) + badMoodPosition) * (1-mood_t) +
+        target.position = (rectTransform.position + new Vector3(0, -rectTransform.rect.height / 8, 0) + badMoodPosition) * (1-mood_t) +
                            (rectTransform.position + new Vector3(rectTransform.rect.width / 4, -rectTransform.rect.height / 8, 0) + goodMoodPosition) * mood_t;
     }
 
