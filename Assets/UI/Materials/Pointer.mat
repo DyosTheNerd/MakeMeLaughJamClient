@@ -67,7 +67,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BorderThickness: 0.17
-    - _Brightness: 8.350384
+    - _Brightness: 10
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5

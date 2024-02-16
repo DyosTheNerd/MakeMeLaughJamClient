@@ -92,7 +92,16 @@ public class GameLoopController : MonoBehaviour
             overlordJudging.OverlordJugdgeNow();
 
             UIAnimationController.instance.PlayOverlordJudgmentAnimation();
+            UIAnimationController.instance.EnableEvaluationMessage(() => !UIAnimationController.instance.AreAnimationsPlaying());
             yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
+
+            // TODO janky wait for one frame.
+            // Because of cascading conditions.
+            // this wait has to be longer than the evaluation frequency of the evaluation message routine.
+            // we can change this later. but for now, jank it is.
+            // we can, for example, use a more complex state machine than (playing) / (not playing) animations.
+            yield return new WaitForSeconds(1.0f);
+
 
             overlordJudging.EvaluateMood();
             UIAnimationController.instance.PlayOverlordJudgmentResultAnimation();
@@ -100,6 +109,8 @@ public class GameLoopController : MonoBehaviour
 
             UIAnimationController.instance.PlayPrepareForNextRoundAnimation();
             yield return new WaitWhile(UIAnimationController.instance.AreAnimationsPlaying);
+
+
 
         }
 

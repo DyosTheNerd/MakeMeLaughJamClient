@@ -71,6 +71,7 @@ public class OverlordJudging : MonoBehaviour
 
     public void OverlordJugdgeNow()
     {
+        oldOverlordMood = overlordMood;
 
         float changeInMood = 0;
         List<int> playedCardList = p_manager.PlayedCards();
@@ -97,7 +98,6 @@ public class OverlordJudging : MonoBehaviour
             
         }
 
-        oldOverlordMood = overlordMood;
         overlordMood += (int)changeInMood;
     }
 

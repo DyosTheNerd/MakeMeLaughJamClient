@@ -109,7 +109,13 @@ public class UIAnimationController : MonoBehaviour
     {
         AnimationsPlaying++;
 
-        yield return new WaitForSeconds(10);
+        float moodVariation = OverlordJudging.instance.overlordMood - OverlordJudging.instance.oldOverlordMood;
+        float displayDuration = 5.0f;
+        loopMessager.DisplayOverlordMessage(moodVariation > 0, displayDuration);
+
+        // TODO add eyebrow animation for Overlord
+
+        yield return new WaitForSeconds(displayDuration);
 
         AnimationsPlaying--;
     }
@@ -122,16 +128,24 @@ public class UIAnimationController : MonoBehaviour
     {
         AnimationsPlaying++;
 
-        yield return new WaitForSeconds(5);
+        float duration = 5.0f;
+
+        loopMessager.EnablePrepareNewRoundMessage();
+
+        yield return new WaitForSeconds(duration);
+
+        loopMessager.ClearMessageCard();
 
         AnimationsPlaying--;
     }
     public void PlayPrepareForNextRoundAnimation()
     {
-
         StartCoroutine(PlayPrepareForNextRoundAnimationRoutine());
+    }
 
-
+    public void EnableEvaluationMessage(System.Func<bool> stopCondition)
+    {
+        loopMessager.EnableOverlordJudgingMessage(stopCondition);
     }
 
 }
