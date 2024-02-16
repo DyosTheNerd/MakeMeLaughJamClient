@@ -14,6 +14,12 @@ Shader "UI/PointerShader"
         _StencilReadMask ("Stencil Read Mask", Float) = 255
 
         _ColorMask ("Color Mask", Float) = 15
+        _Noise("Noise Texture", 2D) = "white" {}
+        _Brightness("Brightness", Float) = 1.0
+        _Fadeout("Fadeout", Float) = 1.0
+        _FadeoutColor("FadeoutColor", Color) = (1,1,1,1)
+        _BorderThickness("Border Thickness", Float) = 1.0
+        _BorderColor("Border Color", Color) = (1,1,1,1)
 
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
     }
@@ -78,10 +84,16 @@ Shader "UI/PointerShader"
 
             sampler2D _MainTex;
             fixed4 _Color;
+            fixed4 _FadeoutColor;
             fixed4 _TextureSampleAdd;
             float4 _ClipRect;
             float4 _MainTex_ST;
 
+            sampler2D _Noise;
+            float _Brightness;
+            float4 _BorderColor;
+            float _BorderThickness;
+            float _Fadeout;
             v2f vert(appdata_t v)
             {
                 v2f OUT;
@@ -96,9 +108,42 @@ Shader "UI/PointerShader"
                 return OUT;
             }
 
+            float edgeProximity(float2 uv) 
+            {
+                //float fade_x = min(smoothstep(0.0, 0.05, uv.x), smoothstep(1.0, 0.95, uv.x));
+                //float fade_y = min(smoothstep(0.0, 0.05, uv.y), smoothstep(1.0, 0.95, uv.y));
+
+                //fade_x = min(fade_x, max(smoothstep(0.1, 0.0, uv.x), smoothstep(0.9, 1.0, uv.x)));
+                //fade_y = min(fade_y, max(smoothstep(0.1, 0.0, uv.y), smoothstep(0.9, 1.0, uv.y)));
+                //fade_x = min(fade_x, max(smoothstep(0.0, 0.05, uv.x), smoothstep(1.0, 0.95, uv.x)));
+                //uv = abs(uv);
+                float fade_x = max(smoothstep(_BorderThickness, 0.0, uv.x), smoothstep(1.0 - _BorderThickness, 1.0, uv.x));
+                float fade_y = max(smoothstep(_BorderThickness, 0.0, uv.y), smoothstep(1.0 - _BorderThickness, 1.0, uv.y));
+
+
+                return max(fade_x, fade_y);
+            }
+
             fixed4 frag(v2f IN) : SV_Target
             {
                 half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+
+                float2 noise = (tex2D(_Noise, IN.texcoord + float2(_SinTime.x, _SinTime.y)).xy) - float2(0.5, 0.5);
+                float fadeout_noise = tex2D(_Noise, IN.texcoord + float2(_SinTime.y, _SinTime.x)).z;
+                fadeout_noise *= fadeout_noise * fadeout_noise;
+
+                //noise *= noise;
+
+                //return fixed4(noise, 0.0,1.0);
+                //color.a *= 1.0 - edgeProximity(IN.texcoord + noise.xy * 0.02);
+                float dist = edgeProximity(IN.texcoord.xy) - 1.5;
+                dist *= dist;
+                color.xyz = lerp(_BorderColor.xyz, color.xyz, smoothstep(0.3, 5.0, dist - noise.x * _Brightness));
+                color.xyz = lerp(_BorderColor.xyz, color.xyz, smoothstep(0.0, 0.5, dist - _BorderThickness + noise.y));
+
+
+                color.xyzw = lerp(color.xyzw, _FadeoutColor,  lerp(0.0, _Fadeout + fadeout_noise * 1.0 - dist * 3.0, _Fadeout));
+                color.a = 1.0 - (_Fadeout + fadeout_noise  + dist * dist /20.0);
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);

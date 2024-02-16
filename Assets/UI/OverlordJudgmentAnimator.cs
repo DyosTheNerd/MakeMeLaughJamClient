@@ -13,18 +13,21 @@ public class OverlordJudgmentAnimator : MonoBehaviour
     public Material ShadowPointerMaterial;
     public Material PointerMaterial;
 
-
-
     public Vector3 badMoodPosition;
     public Vector3 goodMoodPosition;
 
+    [Header("Presentation Data")]
+
     public float oldOverlordMood;
     public float overlordMood;
-
-    [Range(0,1)]
+    //[Range(0,1)]
     //public float t;
     public RectTransform rectTransform;
 
+
+    [Header("Presentation Parameters")]
+    public float pointerGlowFrequency = 15.0f;
+    public float pointerGlowIntensity = 10.0f;
 
     bool isPlaying = false;
 
@@ -35,11 +38,37 @@ public class OverlordJudgmentAnimator : MonoBehaviour
 
     IEnumerator FadeShadowPointer(float duration)
     {
-
-
-        yield return new WaitForSeconds(duration);
+        float t = 0.0f;
+        while(t < duration)
+        {
+            ShadowPointerMaterial.SetFloat("_Fadeout", 0.5f + t / duration * 0.5f) ;
+            t += Time.deltaTime;
+            yield return null;
+        }
 
         shadowPointer.gameObject.SetActive(false);
+    }
+
+    IEnumerator GlowPointer(float duration)
+    {
+        float t = 0.0f;
+        while (t < duration / 2.0)
+        {
+            PointerMaterial.SetFloat("_Brightness", 10.0f + Mathf.Sin(t * pointerGlowFrequency * Mathf.PI / duration) * pointerGlowIntensity);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        while(t > 0)
+        {
+            PointerMaterial.SetFloat("_Brightness", 10.0f + Mathf.Sin(t * pointerGlowFrequency * Mathf.PI / duration) * pointerGlowIntensity);
+            t -= Time.deltaTime;
+            yield return null;
+        }
+        
+        PointerMaterial.SetFloat("_Brightness", 10.0f);
+
+        //shadowPointer.gameObject.SetActive(false);
     }
 
     IEnumerator JudgingCoroutine(float duration)
@@ -52,6 +81,9 @@ public class OverlordJudgmentAnimator : MonoBehaviour
         shadowPointer.gameObject.SetActive(true);
 
         SetPointerPosition(0, shadowPointer);
+        ShadowPointerMaterial.SetFloat("_Fadeout", 0.5f);
+
+        StartCoroutine(GlowPointer(duration));
 
         while (t < duration)
         {
