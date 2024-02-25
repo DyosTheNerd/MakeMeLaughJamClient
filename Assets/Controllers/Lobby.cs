@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 
 namespace Controllers
 {
+    [Serializable]
     public class LobbyPlayer
     {
         public string name;

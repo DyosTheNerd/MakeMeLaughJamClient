@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-// struct representing a card
+[Serializable]
 public struct CardInteraction
 {
     public int id;

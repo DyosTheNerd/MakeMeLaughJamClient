@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartGameButton : MonoBehaviour
 {
     public void OnClick()
     {
-        Debug.Log("StartGameButton.OnClick");
-         LobbyManager.instance.startGame();
+        if (Lobby.players.Count > 0)
+        {
+            SceneManager.LoadScene("Level_1");
+        }
     }
 }

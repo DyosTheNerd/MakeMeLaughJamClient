@@ -99,13 +99,4 @@ public class LobbyManager : MonoBehaviour
 
         updatePlayersEvent?.Invoke(players);
     }
-
-    public void startGame()
-    {
-        if (Lobby.players.Count > 0)
-        {
-            SceneManager.LoadScene("Level_1");
-        }
-    }
-    
 }
