@@ -11,7 +11,7 @@ public class WebGLWebSocketAdapter : MonoBehaviour ,IWebSocketAdapter
 
     
     [DllImport("__Internal")]
-    private static extern void WebSocketSend (string topic, string message);
+    private static extern void WebSocketSend (string message);
 
 
         
@@ -29,10 +29,12 @@ public class WebGLWebSocketAdapter : MonoBehaviour ,IWebSocketAdapter
 
     public void Send(string topic, string message)
     {
+      
+        
         #if UNITY_WEBGL == true && UNITY_EDITOR == false
-            WebSocketSend(topic, message);
+            WebSocketSend(topic + "-:-" + message);
         #else
-            Debug.Log("WEBGL Websocket Adapter - Send: " + topic + " " + message);        
+        Debug.Log("WEBGL Websocket Adapter - Send: " + topic + " " + message); 
         #endif
     }
 

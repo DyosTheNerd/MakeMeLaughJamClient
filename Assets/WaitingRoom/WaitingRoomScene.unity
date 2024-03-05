@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &8167957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2674183576952148694, guid: 6fa15d04b2583e445ae2d2ac67bcb839, type: 3}
+  m_PrefabInstance: {fileID: 504383347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8167958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8167957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8ddf7f022748148b45b8827a35881e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &149244264
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +489,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2674183576952148694, guid: 6fa15d04b2583e445ae2d2ac67bcb839, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8167958}
   m_SourcePrefab: {fileID: 100100000, guid: 6fa15d04b2583e445ae2d2ac67bcb839, type: 3}
 --- !u!224 &667790010 stripped
 RectTransform:
@@ -1450,7 +1470,6 @@ GameObject:
   - component: {fileID: 2087673875}
   - component: {fileID: 2087673874}
   - component: {fileID: 2087673877}
-  - component: {fileID: 2087673878}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1522,13 +1541,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2087673877}
+        m_TargetAssemblyTypeName: StartGameButton, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1573,18 +1592,6 @@ CanvasRenderer:
   m_GameObject: {fileID: 2087673872}
   m_CullTransparentMesh: 1
 --- !u!114 &2087673877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087673872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b712b5d54e38f3349a625c85cdf68783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2087673878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

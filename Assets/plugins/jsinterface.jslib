@@ -4,8 +4,10 @@
     window.dispatchReactUnityEvent("WebSocketInit", UTF8ToString(id));
   },
   
-  WebSocketSend: function(topic, message){
-    window.dispatchReactUnityEvent("WebSocketSend", UTF8ToString(topic), UTF8ToString(message));
+  WebSocketSend: function(msg){
+    const  message = UTF8ToString(msg);
+    
+    window.dispatchReactUnityEvent("WebSocketSend",message);
   },
 
   GetGameQrCode: function(id){

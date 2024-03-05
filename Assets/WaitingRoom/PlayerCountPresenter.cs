@@ -12,6 +12,7 @@ public class PlayerCountPresenter : MonoBehaviour
 
     public void OnPlayerCountUpdated(List<LobbyPlayer> players)
     {
+        Debug.Log("updating players: " + players.Count);
         GetComponent<TextMeshProUGUI>().text = $"{players.Count}";
     }
 }

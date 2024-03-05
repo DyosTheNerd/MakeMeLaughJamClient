@@ -18,7 +18,7 @@ public class HandRemoteSocket: MonoBehaviour
     public void OnHandUpdated(string playerId, CardInteraction[] cards, int roundNumber)
     {
         string message = handUpdatedAsJSON(playerId, cards, roundNumber);
-        WebSocketBridge.instance.Send("handUpdate", message);
+        WebSocketBridge.instance.Send( "handUpdate-" + playerId, message);
     }
 
     public void WebSocketReceive(string topic, string message)
